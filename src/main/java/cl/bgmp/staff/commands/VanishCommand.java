@@ -28,11 +28,9 @@ public class VanishCommand {
     StaffMode staffMode = Staff.get().getStaffMode();
     VanishMode vanishMode = Staff.get().getVanishMode();
 
-    if (staffMode.isEnabledFor(player)) {
-      if (vanishMode.isEnabledFor(player)) vanishMode.disableFor(player);
-      else vanishMode.enableFor(player);
+    if (vanishMode.isEnabledFor(player)) vanishMode.disableFor(player);
+    else vanishMode.enableFor(player);
 
-      staffMode.touchItems(player);
-    }
+    if (staffMode.isEnabledFor(player)) staffMode.touchItems(player);
   }
 }
