@@ -19,7 +19,7 @@ public class ModMenuGUI extends GUI implements Listener {
   private ItemStack vanishItem =
       new ItemBuilder(Material.GLASS_PANE)
           .setName("&f&lToggle Vanish")
-          .setLore("&7Right-click to toggle.")
+          .setLore("&7Click derecho para activar el modo vanish.")
           .build();
   private GUIButton vanish =
       new GUIButton(vanishItem) {
@@ -30,9 +30,9 @@ public class ModMenuGUI extends GUI implements Listener {
       };
 
   private ItemStack muteItem =
-      new ItemBuilder(Material.RED_WOOL)
-          .setName("&c&lMute Chat")
-          .setLore("&7Right-click to mute the chat.")
+      new ItemBuilder(Material.GREEN_WOOL)
+          .setName("&c&lMute/UnMute Chat")
+          .setLore("&7Click derecho para mutear/desmutear el chat.")
           .build();
   private GUIButton mute =
       new GUIButton(muteItem) {
@@ -42,23 +42,10 @@ public class ModMenuGUI extends GUI implements Listener {
         }
       };
 
-  private ItemStack unmuteItem =
-      new ItemBuilder(Material.GREEN_WOOL)
-          .setName("&a&lUnMute Chat")
-          .setLore("&7Right-click to unmute the chat")
-          .build();
-  private GUIButton unmute =
-      new GUIButton(unmuteItem) {
-        @Override
-        public void clickBy(Player clicker) {
-          clicker.performCommand("litebans:unmute");
-        }
-      };
-
   private ItemStack clearChatItem =
       new ItemBuilder(Material.FLINT_AND_STEEL)
           .setName("&e&lClear Chat")
-          .setLore("&7Right-click to clear the chat.")
+          .setLore("&7Click derecho para limpiar el chat.")
           .build();
   private GUIButton clearChat =
       new GUIButton(clearChatItem) {
@@ -72,10 +59,9 @@ public class ModMenuGUI extends GUI implements Listener {
 
   public ModMenuGUI() {
     super(Staff.get(), ChatColor.AQUA + "Mod Menu", 27, new ItemBuilder(Material.AIR).build());
-    order.put(10, vanish);
-    order.put(12, mute);
-    order.put(14, unmute);
-    order.put(16, clearChat);
+    order.put(11, vanish);
+    order.put(13, mute);
+    order.put(15, clearChat);
     Staff.get().registerEvents(this);
   }
 
