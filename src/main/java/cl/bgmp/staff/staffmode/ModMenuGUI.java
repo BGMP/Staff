@@ -75,8 +75,10 @@ public class ModMenuGUI extends GUI implements Listener {
     int clickedSlot = event.getSlot();
 
     for (int slot : order.keySet()) {
-      if (clickedSlot != slot) continue;
-      order.get(slot).clickBy(player);
+      if (clickedSlot == slot) {
+        order.get(slot).clickBy(player);
+        break;
+      }
     }
   }
 }
