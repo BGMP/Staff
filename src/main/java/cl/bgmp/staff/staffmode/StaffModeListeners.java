@@ -1,6 +1,7 @@
 package cl.bgmp.staff.staffmode;
 
 import cl.bgmp.staff.ChatConstant;
+import cl.bgmp.staff.vanishmode.VanishMode;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -10,6 +11,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -26,9 +28,11 @@ import org.bukkit.inventory.ItemStack;
 
 public class StaffModeListeners implements Listener {
   private StaffMode staffMode;
+  private VanishMode vanishMode;
 
-  public StaffModeListeners(StaffMode staffMode) {
+  public StaffModeListeners(StaffMode staffMode, VanishMode vanishMode) {
     this.staffMode = staffMode;
+    this.vanishMode = vanishMode;
   }
 
   @EventHandler
@@ -55,10 +59,27 @@ public class StaffModeListeners implements Listener {
 
     Player randomPlayer = getRandomOnlinePlayer();
     if (randomPlayer == null) {
-      clicker.sendMessage(ChatColor.RED + ChatConstant.NOBODY_TO_TELEPORT_TO.getMessage());
+      clicker.sendMessage(ChatConstant.NOBODY_TO_TELEPORT_TO.getFormattedMessage(ChatColor.RED));
     } else {
       clicker.teleport(randomPlayer);
     }
+  }
+
+  private Player getRandomOnlinePlayer() {
+    Player randomPlayer;
+
+    List<String> teleportablePlayerNames =
+        Bukkit.getOnlinePlayers().stream()
+            .filter(onlinePlayer -> !(staffMode.isEnabledFor(onlinePlayer)))
+            .map(HumanEntity::getName)
+            .collect(Collectors.toList());
+
+    if (teleportablePlayerNames.isEmpty()) return null;
+
+    int random = new Random().nextInt(teleportablePlayerNames.size());
+    randomPlayer = Bukkit.getPlayer(teleportablePlayerNames.get(random));
+
+    return randomPlayer;
   }
 
   @EventHandler
@@ -70,6 +91,42 @@ public class StaffModeListeners implements Listener {
     if (!playerIsHoldingItem(clicker, staffMode.getItems().getMenu())) return;
 
     clicker.openInventory(staffMode.getMenuGUI().getInventory());
+  }
+
+  @EventHandler
+  public void onVanish(PlayerInteractEvent event) {
+    Player clicker = event.getPlayer();
+    if (!staffMode.isEnabledFor(clicker)) return;
+
+    if (playerIsHoldingItem(clicker, staffMode.getItems().getEnableVanish())) {
+      vanishMode.enableFor(clicker);
+      staffMode.touchItems(clicker);
+      return;
+    }
+    if (playerIsHoldingItem(clicker, staffMode.getItems().getDisableVanish())) {
+      vanishMode.disableFor(clicker);
+      staffMode.touchItems(clicker);
+    }
+  }
+
+  private boolean playerIsHoldingItem(Player player, ItemStack itemStack) {
+    ItemStack itemInMainHand = player.getInventory().getItemInMainHand();
+    return itemInMainHand.equals(itemStack);
+  }
+
+  @EventHandler(priority = EventPriority.LOWEST)
+  public void onPlayerJoin(PlayerJoinEvent event) {
+    Player player = event.getPlayer();
+    if (!player.hasPermission("staff.staffmode")) return;
+
+    vanishMode.enableFor(player);
+    staffMode.enableFor(player);
+  }
+
+  @EventHandler(priority = EventPriority.LOWEST)
+  public void onPlayerQuit(PlayerQuitEvent event) {
+    Player player = event.getPlayer();
+    if (staffMode.isEnabledFor(player)) staffMode.disableFor(player);
   }
 
   @EventHandler
@@ -101,21 +158,6 @@ public class StaffModeListeners implements Listener {
   }
 
   @EventHandler
-  public void onPlayerJoin(PlayerJoinEvent event) {
-    Player player = event.getPlayer();
-    if (!player.hasPermission("staff.staffmode")) return;
-
-    staffMode.enableFor(player);
-    player.performCommand("essentials:vanish");
-  }
-
-  @EventHandler
-  public void onPlayerQuit(PlayerQuitEvent event) {
-    Player player = event.getPlayer();
-    if (staffMode.isEnabledFor(player)) staffMode.disableFor(player);
-  }
-
-  @EventHandler
   public void onBlockPlace(BlockPlaceEvent event) {
     if (staffMode.isEnabledFor(event.getPlayer())) event.setCancelled(true);
   }
@@ -123,27 +165,5 @@ public class StaffModeListeners implements Listener {
   @EventHandler
   public void onBlockBreak(BlockBreakEvent event) {
     if (staffMode.isEnabledFor(event.getPlayer())) event.setCancelled(true);
-  }
-
-  private boolean playerIsHoldingItem(Player player, ItemStack itemStack) {
-    ItemStack itemInMainHand = player.getInventory().getItemInMainHand();
-    return itemInMainHand.equals(itemStack);
-  }
-
-  private Player getRandomOnlinePlayer() {
-    Player randomPlayer;
-
-    List<String> teleportablePlayerNames =
-        Bukkit.getOnlinePlayers().stream()
-            .filter(onlinePlayer -> !(staffMode.isEnabledFor(onlinePlayer)))
-            .map(HumanEntity::getName)
-            .collect(Collectors.toList());
-
-    if (teleportablePlayerNames.isEmpty()) return null;
-
-    int random = new Random().nextInt(teleportablePlayerNames.size());
-    randomPlayer = Bukkit.getPlayer(teleportablePlayerNames.get(random));
-
-    return randomPlayer;
   }
 }

@@ -16,23 +16,10 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 public class ModMenuGUI extends GUI implements Listener {
-  private ItemStack vanishItem =
-      new ItemBuilder(Material.GLASS_PANE)
-          .setName("&f&lToggle Vanish")
-          .setLore("&7Click derecho para activar el modo vanish.")
-          .build();
-  private GUIButton vanish =
-      new GUIButton(vanishItem) {
-        @Override
-        public void clickBy(Player player) {
-          player.performCommand("essentials:vanish");
-        }
-      };
-
   private ItemStack muteItem =
       new ItemBuilder(Material.GREEN_WOOL)
           .setName("&c&lMute/UnMute Chat")
-          .setLore("&7Click derecho para mutear/desmutear el chat.")
+          .setLore("&7Click derecho para", "&7mutear/desmutear el chat.")
           .build();
   private GUIButton mute =
       new GUIButton(muteItem) {
@@ -59,9 +46,8 @@ public class ModMenuGUI extends GUI implements Listener {
 
   public ModMenuGUI() {
     super(Staff.get(), ChatColor.AQUA + "Mod Menu", 27, new ItemBuilder(Material.AIR).build());
-    order.put(11, vanish);
-    order.put(13, mute);
-    order.put(15, clearChat);
+    order.put(12, mute);
+    order.put(14, clearChat);
     Staff.get().registerEvents(this);
   }
 

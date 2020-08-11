@@ -1,8 +1,10 @@
 package cl.bgmp.staff;
 
 import cl.bgmp.staff.commands.StaffCommand;
+import cl.bgmp.staff.commands.VanishCommand;
 import cl.bgmp.staff.staffmode.StaffMode;
 import cl.bgmp.staff.staffmode.StaffModeListeners;
+import cl.bgmp.staff.vanishmode.VanishMode;
 import com.sk89q.bukkit.util.BukkitCommandsManager;
 import com.sk89q.bukkit.util.CommandsManagerRegistration;
 import com.sk89q.minecraft.util.commands.*;
@@ -16,12 +18,25 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Staff extends JavaPlugin {
   private static Staff staff;
-  private static StaffMode staffMode;
+  private StaffMode staffMode;
+  private VanishMode vanishMode;
 
   @SuppressWarnings("rawtypes")
   private CommandsManager commandsManager;
 
   private CommandsManagerRegistration commandRegistry;
+
+  public static Staff get() {
+    return staff;
+  }
+
+  public StaffMode getStaffMode() {
+    return staffMode;
+  }
+
+  public VanishMode getVanishMode() {
+    return vanishMode;
+  }
 
   @SuppressWarnings("unchecked")
   @Override
@@ -48,24 +63,17 @@ public final class Staff extends JavaPlugin {
     return true;
   }
 
-  public static Staff get() {
-    return staff;
-  }
-
-  public StaffMode getStaffMode() {
-    return staffMode;
-  }
-
   @Override
   public void onEnable() {
     staff = this;
     staffMode = new StaffMode();
+    vanishMode = new VanishMode(this);
 
     commandsManager = new BukkitCommandsManager();
     commandRegistry = new CommandsManagerRegistration(this, commandsManager);
 
-    registerEvents(new StaffModeListeners(staffMode));
-    registerCommands(StaffCommand.class);
+    registerEvents(new StaffModeListeners(staffMode, vanishMode));
+    registerCommands(StaffCommand.class, VanishCommand.class);
   }
 
   @Override
