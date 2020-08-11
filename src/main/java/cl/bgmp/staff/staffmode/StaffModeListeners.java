@@ -17,8 +17,8 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerAttemptPickupItemEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -148,8 +148,12 @@ public class StaffModeListeners implements Listener {
   }
 
   @EventHandler
-  public void onItemPickupByPlayer(PlayerAttemptPickupItemEvent event) {
-    if (staffMode.isEnabledFor(event.getPlayer())) event.setCancelled(true);
+  public void onItemPickupByPlayer(EntityPickupItemEvent event) {
+    Entity entity = event.getEntity();
+    if (!(entity instanceof Player)) return;
+
+    Player picker = (Player) entity;
+    if (staffMode.isEnabledFor(picker)) event.setCancelled(true);
   }
 
   @EventHandler
