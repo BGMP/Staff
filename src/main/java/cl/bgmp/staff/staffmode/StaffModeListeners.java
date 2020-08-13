@@ -170,4 +170,9 @@ public class StaffModeListeners implements Listener {
   public void onBlockBreak(BlockBreakEvent event) {
     if (staffMode.isEnabledFor(event.getPlayer())) event.setCancelled(true);
   }
+
+  @EventHandler
+  public void onPlayerInteract(PlayerInteractEvent event) {
+    if (staffMode.isEnabledFor(event.getPlayer())) event.setCancelled(true);
+  }
 }
