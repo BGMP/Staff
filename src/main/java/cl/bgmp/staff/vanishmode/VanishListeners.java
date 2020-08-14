@@ -23,12 +23,12 @@ public class VanishListeners implements Listener {
   public void onVanishedPlayerQuit(PlayerQuitEvent event) {
     if (!vanishMode.isEnabledFor(event.getPlayer())) return;
 
-    vanishMode.disableFor(event.getPlayer());
+    vanishMode.disableFor(event.getPlayer(), Bukkit.getOnlinePlayers());
     event.setQuitMessage(null);
   }
 
   /**
-   * Helps handling new comers in relation to the already vanished players,
+   * Helps handling joining players in relation to the already vanished ones, as
    * Bukkit's hidePlayer() method isn't persistent
    * @param event The join event to hook onto
    */

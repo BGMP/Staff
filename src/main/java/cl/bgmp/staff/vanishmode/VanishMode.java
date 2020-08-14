@@ -1,6 +1,7 @@
 package cl.bgmp.staff.vanishmode;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import com.google.common.collect.ImmutableList;
@@ -40,12 +41,29 @@ public class VanishMode {
     if (!players.contains(vanished.getName())) players.add(vanished.getName());
   }
 
+  public void enableFor(Player vanished, Collection<? extends Player> playersFor) {
+    for (Player playerFor : playersFor) {
+      if (playerFor.hasPermission("staff.vanish.see")) continue;
+      playerFor.hidePlayer(plugin, vanished);
+    }
+
+    if (!players.contains(vanished.getName())) players.add(vanished.getName());
+  }
+
   /**
    * Disables vanish mode
    * @param vanished The vanished player in question
    * @param playersFor Everyone who the player will no longer render vanished for
    */
   public void disableFor(Player vanished, Player... playersFor) {
+    for (Player playerFor : playersFor) {
+      playerFor.showPlayer(plugin, vanished);
+    }
+
+    players.remove(vanished.getName());
+  }
+
+  public void disableFor(Player vanished, Collection<? extends Player> playersFor) {
     for (Player playerFor : playersFor) {
       playerFor.showPlayer(plugin, vanished);
     }

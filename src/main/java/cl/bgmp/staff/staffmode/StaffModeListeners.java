@@ -99,12 +99,12 @@ public class StaffModeListeners implements Listener {
     if (!staffMode.isEnabledFor(clicker)) return;
 
     if (playerIsHoldingItem(clicker, staffMode.getItems().getEnableVanish())) {
-      vanishMode.enableFor(clicker);
+      vanishMode.enableFor(clicker, Bukkit.getOnlinePlayers());
       staffMode.touchItems(clicker);
       return;
     }
     if (playerIsHoldingItem(clicker, staffMode.getItems().getDisableVanish())) {
-      vanishMode.disableFor(clicker);
+      vanishMode.disableFor(clicker, Bukkit.getOnlinePlayers());
       staffMode.touchItems(clicker);
     }
   }
@@ -119,7 +119,7 @@ public class StaffModeListeners implements Listener {
     Player player = event.getPlayer();
     if (!player.hasPermission("staff.staffmode")) return;
 
-    vanishMode.enableFor(player);
+    vanishMode.enableFor(player, Bukkit.getOnlinePlayers());
     staffMode.enableFor(player);
     player.sendMessage(ChatConstant.STAFF_MODE_ENABLED.getFormattedMessage(ChatColor.GREEN));
   }

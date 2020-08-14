@@ -7,6 +7,7 @@ import cl.bgmp.staff.vanishmode.VanishMode;
 import com.sk89q.minecraft.util.commands.Command;
 import com.sk89q.minecraft.util.commands.CommandContext;
 import com.sk89q.minecraft.util.commands.CommandPermissions;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -30,11 +31,11 @@ public class StaffCommand {
     VanishMode vanishMode = Staff.get().getVanishMode();
 
     if (staffMode.isEnabledFor(player)) {
-      vanishMode.disableFor(player);
+      vanishMode.disableFor(player, Bukkit.getOnlinePlayers());
       staffMode.disableFor(player);
       player.sendMessage(ChatConstant.STAFF_MODE_DISABLED.getFormattedMessage(ChatColor.RED));
     } else {
-      vanishMode.enableFor(player);
+      vanishMode.enableFor(player, Bukkit.getOnlinePlayers());
       staffMode.enableFor(player);
       player.sendMessage(ChatConstant.STAFF_MODE_ENABLED.getFormattedMessage(ChatColor.GREEN));
     }

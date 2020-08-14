@@ -2,6 +2,7 @@ package cl.bgmp.staff.staffmode;
 
 import java.util.HashMap;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -10,6 +11,7 @@ public class InventoryMemory {
   private HashMap<String, ItemStack[]> armorMemory = new HashMap<>();
   private HashMap<String, Float> expMemory = new HashMap<>();
   private HashMap<String, GameMode> gameModeMemory = new HashMap<>();
+  private HashMap<String, Location> locationMemory = new HashMap<>();
 
   public InventoryMemory() {}
 
@@ -29,31 +31,40 @@ public class InventoryMemory {
     gameModeMemory.put(player.getName(), player.getGameMode());
   }
 
+  public void saveLocation(Player player) {
+    locationMemory.put(player.getName(), player.getLocation());
+  }
+
   public void backupInventoryFor(Player player) {
     savePlayerInventory(player);
     savePlayerArmor(player);
     savePlayerXp(player);
     saveGameMode(player);
+    saveLocation(player);
   }
 
   public void restoreInventoryFor(Player player) {
-    ItemStack[] contents = contentsMemory.get(player.getName());
-    ItemStack[] armor = armorMemory.get(player.getName());
-    float exp = expMemory.get(player.getName());
-    GameMode gameMode = gameModeMemory.get(player.getName());
+    String playerName = player.getName();
 
-    removePlayerFromMemory(player);
+    ItemStack[] contents = contentsMemory.get(playerName);
+    ItemStack[] armor = armorMemory.get(playerName);
+    float exp = expMemory.get(playerName);
+    GameMode gameMode = gameModeMemory.get(playerName);
+    Location location = locationMemory.get(playerName);
+
+    removePlayerFromMemory(playerName);
 
     player.getInventory().setContents(contents);
     player.getInventory().setArmorContents(armor);
     player.setExp(exp);
     player.setGameMode(gameMode);
+    player.teleport(location);
   }
 
-  private void removePlayerFromMemory(Player player) {
-    contentsMemory.remove(player.getName());
-    armorMemory.remove(player.getName());
-    expMemory.remove(player.getName());
-    gameModeMemory.remove(player.getName());
+  private void removePlayerFromMemory(String playerName) {
+    contentsMemory.remove(playerName);
+    armorMemory.remove(playerName);
+    expMemory.remove(playerName);
+    gameModeMemory.remove(playerName);
   }
 }
