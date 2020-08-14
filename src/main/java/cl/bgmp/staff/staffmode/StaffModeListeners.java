@@ -121,6 +121,7 @@ public class StaffModeListeners implements Listener {
 
     vanishMode.enableFor(player);
     staffMode.enableFor(player);
+    player.sendMessage(ChatConstant.STAFF_MODE_ENABLED.getFormattedMessage(ChatColor.GREEN));
   }
 
   @EventHandler(priority = EventPriority.LOWEST)

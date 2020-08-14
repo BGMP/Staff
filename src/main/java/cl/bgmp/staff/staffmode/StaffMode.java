@@ -45,7 +45,6 @@ public class StaffMode {
     touchItems(player);
 
     players.add(player.getName());
-    player.sendMessage(ChatConstant.STAFF_MODE_ENABLED.getFormattedMessage(ChatColor.GREEN));
   }
 
   public void disableFor(Player player) {
@@ -53,7 +52,6 @@ public class StaffMode {
     inventoryMemory.restoreInventoryFor(player);
 
     players.remove(player.getName());
-    player.sendMessage(ChatConstant.STAFF_MODE_DISABLED.getFormattedMessage(ChatColor.RED));
   }
 
   public void touchItems(Player player) {

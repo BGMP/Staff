@@ -13,6 +13,7 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 public class VanishCommand {
+
   @Command(
       aliases = {"vanish", "v"},
       desc = "Habilita el modo vanish.",
@@ -28,8 +29,13 @@ public class VanishCommand {
     StaffMode staffMode = Staff.get().getStaffMode();
     VanishMode vanishMode = Staff.get().getVanishMode();
 
-    if (vanishMode.isEnabledFor(player)) vanishMode.disableFor(player);
-    else vanishMode.enableFor(player);
+    if (vanishMode.isEnabledFor(player)) {
+      vanishMode.disableFor(player);
+      player.sendMessage(ChatConstant.VANISH_MODE_DISABLED.getFormattedMessage(ChatColor.RED));
+    } else {
+      vanishMode.enableFor(player);
+      player.sendMessage(ChatConstant.VANISH_MODE_ENABLED.getFormattedMessage(ChatColor.GREEN));
+    }
 
     if (staffMode.isEnabledFor(player)) staffMode.touchItems(player);
   }
