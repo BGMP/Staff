@@ -1,9 +1,9 @@
 package cl.bgmp.staff.staffmode;
 
 import cl.bgmp.staff.Staff;
-import cl.bgmp.staff.util.GUI;
-import cl.bgmp.staff.util.GUIButton;
-import cl.bgmp.staff.util.ItemBuilder;
+import cl.bgmp.staff.util.gui.GUI;
+import cl.bgmp.staff.util.gui.GUIButton;
+import cl.bgmp.staff.util.items.ItemBuilder;
 import java.util.HashMap;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

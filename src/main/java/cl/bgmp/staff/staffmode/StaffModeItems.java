@@ -1,7 +1,7 @@
 package cl.bgmp.staff.staffmode;
 
 import cl.bgmp.staff.Staff;
-import cl.bgmp.staff.util.ItemBuilder;
+import cl.bgmp.staff.util.items.ItemBuilder;
 import java.util.HashMap;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

@@ -1,4 +1,4 @@
-package cl.bgmp.staff.util;
+package cl.bgmp.staff.util.gui;
 
 import java.util.Objects;
 import org.bukkit.Bukkit;

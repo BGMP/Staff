@@ -1,4 +1,4 @@
-package cl.bgmp.staff.util;
+package cl.bgmp.staff.util.items;
 
 import java.util.Arrays;
 import java.util.List;

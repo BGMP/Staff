@@ -1,4 +1,4 @@
-package cl.bgmp.staff.util;
+package cl.bgmp.staff.util.gui;
 
 import org.bukkit.entity.Player;
 
