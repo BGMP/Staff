@@ -19,11 +19,13 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.vehicle.VehicleEnterEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class StaffModeListeners implements Listener {
@@ -35,7 +37,7 @@ public class StaffModeListeners implements Listener {
     this.vanishMode = vanishMode;
   }
 
-  @EventHandler
+  @EventHandler(priority = EventPriority.HIGH)
   public void onInventoryInspect(PlayerInteractEntityEvent event) {
     Player clicker = event.getPlayer();
     if (!staffMode.isEnabledFor(clicker)) return;
@@ -174,6 +176,20 @@ public class StaffModeListeners implements Listener {
 
   @EventHandler
   public void onPlayerInteract(PlayerInteractEvent event) {
+    if (staffMode.isEnabledFor(event.getPlayer())) event.setCancelled(true);
+  }
+
+  @EventHandler(priority = EventPriority.LOW)
+  public void onPlayerInteractAtEntity(VehicleEnterEvent event) {
+    Entity entity = event.getEntered();
+    if (!(entity instanceof Player)) return;
+
+    Player player = (Player) entity;
+    if (staffMode.isEnabledFor(player)) event.setCancelled(true);
+  }
+
+  @EventHandler(priority = EventPriority.LOW)
+  public void onPlayerInteractAtEntity(PlayerBedEnterEvent event) {
     if (staffMode.isEnabledFor(event.getPlayer())) event.setCancelled(true);
   }
 }
