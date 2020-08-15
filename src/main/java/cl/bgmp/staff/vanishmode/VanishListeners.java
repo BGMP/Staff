@@ -3,6 +3,7 @@ package cl.bgmp.staff.vanishmode;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -14,7 +15,13 @@ public class VanishListeners implements Listener {
     this.vanishMode = vanishMode;
   }
 
-  @EventHandler
+  /**
+   * Initial vanish mode application is being applied at {@link
+   * cl.bgmp.staff.staffmode.StaffModeListeners#onPlayerJoin(PlayerJoinEvent)}
+   *
+   * @param event Join event
+   */
+  @EventHandler(priority = EventPriority.HIGHEST)
   public void onVanishedPlayerJoin(PlayerJoinEvent event) {
     if (vanishMode.isEnabledFor(event.getPlayer())) event.setJoinMessage(null);
   }
@@ -28,8 +35,9 @@ public class VanishListeners implements Listener {
   }
 
   /**
-   * Helps handling joining players in relation to the already vanished ones, as
+   * Helps handling joining players in relation to already vanished individuals in memory, as
    * Bukkit's hidePlayer() method isn't persistent
+   *
    * @param event The join event to hook onto
    */
   @EventHandler

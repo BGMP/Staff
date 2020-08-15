@@ -121,7 +121,7 @@ public class StaffModeListeners implements Listener {
     Player player = event.getPlayer();
     if (!player.hasPermission("staff.staffmode")) return;
 
-    vanishMode.enableFor(player, Bukkit.getOnlinePlayers());
+    vanishMode.enableFor(event.getPlayer(), Bukkit.getOnlinePlayers());
     staffMode.enableFor(player);
     player.sendMessage(ChatConstant.STAFF_MODE_ENABLED.getFormattedMessage(ChatColor.GREEN));
   }

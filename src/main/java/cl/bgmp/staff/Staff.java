@@ -4,6 +4,7 @@ import cl.bgmp.staff.commands.StaffCommand;
 import cl.bgmp.staff.commands.VanishCommand;
 import cl.bgmp.staff.staffmode.StaffMode;
 import cl.bgmp.staff.staffmode.StaffModeListeners;
+import cl.bgmp.staff.vanishmode.VanishListeners;
 import cl.bgmp.staff.vanishmode.VanishMode;
 import com.sk89q.bukkit.util.BukkitCommandsManager;
 import com.sk89q.bukkit.util.CommandsManagerRegistration;
@@ -72,7 +73,7 @@ public final class Staff extends JavaPlugin {
     commandsManager = new BukkitCommandsManager();
     commandRegistry = new CommandsManagerRegistration(this, commandsManager);
 
-    registerEvents(new StaffModeListeners(staffMode, vanishMode));
+    registerEvents(new StaffModeListeners(staffMode, vanishMode), new VanishListeners(vanishMode));
     registerCommands(StaffCommand.class, VanishCommand.class);
   }
 
