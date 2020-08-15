@@ -180,7 +180,7 @@ public class StaffModeListeners implements Listener {
   }
 
   @EventHandler(priority = EventPriority.LOW)
-  public void onPlayerInteractAtEntity(VehicleEnterEvent event) {
+  public void onPlayerRideVehicle(VehicleEnterEvent event) {
     Entity entity = event.getEntered();
     if (!(entity instanceof Player)) return;
 
@@ -189,7 +189,7 @@ public class StaffModeListeners implements Listener {
   }
 
   @EventHandler(priority = EventPriority.LOW)
-  public void onPlayerInteractAtEntity(PlayerBedEnterEvent event) {
+  public void onPlayerEnterBed(PlayerBedEnterEvent event) {
     if (staffMode.isEnabledFor(event.getPlayer())) event.setCancelled(true);
   }
 }
