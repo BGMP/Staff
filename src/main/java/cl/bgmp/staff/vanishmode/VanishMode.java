@@ -1,5 +1,6 @@
 package cl.bgmp.staff.vanishmode;
 
+import cl.bgmp.staff.Permissions;
 import com.google.common.collect.ImmutableList;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -32,7 +33,7 @@ public class VanishMode {
    */
   public void enableFor(Player vanished, Player... playersFor) {
     for (Player playerFor : playersFor) {
-      if (playerFor.hasPermission("staff.vanish.see")) continue;
+      if (playerFor.hasPermission(Permissions.VANISH_MODE_SEE)) continue;
       playerFor.hidePlayer(plugin, vanished);
     }
 
@@ -41,7 +42,7 @@ public class VanishMode {
 
   public void enableFor(Player vanished, Collection<? extends Player> playersFor) {
     for (Player playerFor : playersFor) {
-      if (playerFor.hasPermission("staff.vanish.see")) continue;
+      if (playerFor.hasPermission(Permissions.VANISH_MODE_SEE)) continue;
       playerFor.hidePlayer(plugin, vanished);
     }
 

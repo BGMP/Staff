@@ -1,6 +1,7 @@
 package cl.bgmp.staff.staffmode;
 
 import cl.bgmp.staff.ChatConstant;
+import cl.bgmp.staff.Permissions;
 import cl.bgmp.staff.vanishmode.VanishMode;
 import java.util.List;
 import java.util.Random;
@@ -119,7 +120,7 @@ public class StaffModeListeners implements Listener {
   @EventHandler(priority = EventPriority.LOWEST)
   public void onPlayerJoin(PlayerJoinEvent event) {
     Player player = event.getPlayer();
-    if (!player.hasPermission("staff.staffmode")) return;
+    if (!player.hasPermission(Permissions.STAFF_MODE)) return;
 
     vanishMode.enableFor(event.getPlayer(), Bukkit.getOnlinePlayers());
     staffMode.enableFor(player);

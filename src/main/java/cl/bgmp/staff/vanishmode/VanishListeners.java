@@ -16,7 +16,7 @@ public class VanishListeners implements Listener {
   }
 
   /**
-   * Initial vanish mode application is being applied at {@link
+   * Initial vanish mode is being applied at {@link
    * cl.bgmp.staff.staffmode.StaffModeListeners#onPlayerJoin(PlayerJoinEvent)}
    *
    * @param event Join event
