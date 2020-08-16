@@ -73,7 +73,7 @@ public class StaffModeListeners implements Listener {
 
     List<String> teleportablePlayerNames =
         Bukkit.getOnlinePlayers().stream()
-            .filter(onlinePlayer -> !(staffMode.isEnabledFor(onlinePlayer)))
+            .filter(onlinePlayer -> !(onlinePlayer.hasPermission(Permissions.STAFF_MODE)))
             .map(HumanEntity::getName)
             .collect(Collectors.toList());
 
