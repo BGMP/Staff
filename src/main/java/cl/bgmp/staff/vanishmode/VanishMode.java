@@ -41,12 +41,7 @@ public class VanishMode {
   }
 
   public void enableFor(Player vanished, Collection<? extends Player> playersFor) {
-    for (Player playerFor : playersFor) {
-      if (playerFor.hasPermission(Permissions.VANISH_MODE_SEE)) continue;
-      playerFor.hidePlayer(plugin, vanished);
-    }
-
-    if (!players.contains(vanished.getName())) players.add(vanished.getName());
+    enableFor(vanished, playersFor.toArray(new Player[0]));
   }
 
   /**
