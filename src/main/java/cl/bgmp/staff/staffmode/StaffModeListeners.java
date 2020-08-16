@@ -68,6 +68,11 @@ public class StaffModeListeners implements Listener {
     }
   }
 
+  /**
+   * Retrieves a random online player, excluding those ones who are allowed into staff mode
+   *
+   * @return The suitable online player, or null if nobody is
+   */
   private Player getRandomOnlinePlayer() {
     Player randomPlayer;
 
