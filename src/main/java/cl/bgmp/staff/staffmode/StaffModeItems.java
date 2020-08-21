@@ -8,6 +8,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public class StaffModeItems {
+  private final int worldEditTeleportItemSlot = 0;
+  private final int worldEditWandItemSlot = 1;
+  private final int vanishItemSlot = 2;
+  private final int menuItemSlot = 7;
+  private final int randomTeleportItemSlot = 8;
+
   private ItemStack worldEditTeleport =
       new ItemBuilder(Material.COMPASS)
           .setName("&9&lTeleportation Tool")
@@ -15,11 +21,6 @@ public class StaffModeItems {
           .build();
   private ItemStack worldEditWand =
       new ItemBuilder(Material.RABBIT_FOOT).setName("&5&lEdit Wand").build();
-  private ItemStack inventoryInspect =
-      new ItemBuilder(Material.BOOK)
-          .setName("&b&lCheck Inventory")
-          .setLore("&7Click derechoa un jugador", "&7para ver su inventario.")
-          .build();
   private ItemStack enableVanish =
       new ItemBuilder(Material.LEVER).setName("&f&lVanish &c&lOFF").build();
   private ItemStack disableVanish =
@@ -32,21 +33,16 @@ public class StaffModeItems {
   private ItemStack randomTeleport =
       new ItemBuilder(Material.MUSIC_DISC_CAT)
           .setName("&c&lRandom Teleport")
-          .setLore("&7Click derecho para", "&7teletransportarte a un jugador aleatorio.")
+          .setLore("&7Click derecho para teletransportarte", "&7a un jugador aleatorio.")
           .build();
   private HashMap<Integer, ItemStack> order = new HashMap<>();
 
   StaffModeItems() {
-    order.put(0, worldEditTeleport);
-    order.put(1, worldEditWand);
-    order.put(2, inventoryInspect);
-    order.put(3, enableVanish);
-    order.put(7, menu);
-    order.put(8, randomTeleport);
-  }
-
-  public ItemStack getInventoryInspect() {
-    return inventoryInspect;
+    order.put(worldEditTeleportItemSlot, worldEditTeleport);
+    order.put(worldEditWandItemSlot, worldEditWand);
+    order.put(vanishItemSlot, enableVanish);
+    order.put(menuItemSlot, menu);
+    order.put(randomTeleportItemSlot, randomTeleport);
   }
 
   public ItemStack getRandomTeleport() {
@@ -72,9 +68,9 @@ public class StaffModeItems {
 
   private void updateVanishItemFor(Player player) {
     if (Staff.get().getVanishMode().isEnabledFor(player)) {
-      order.put(3, disableVanish);
+      order.put(vanishItemSlot, disableVanish);
     } else {
-      order.put(3, enableVanish);
+      order.put(vanishItemSlot, enableVanish);
     }
   }
 }

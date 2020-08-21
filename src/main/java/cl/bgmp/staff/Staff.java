@@ -1,7 +1,9 @@
 package cl.bgmp.staff;
 
+import cl.bgmp.staff.commands.InventorySeeCommand;
 import cl.bgmp.staff.commands.StaffCommand;
 import cl.bgmp.staff.commands.VanishCommand;
+import cl.bgmp.staff.inventorytracker.InventoryTracker;
 import cl.bgmp.staff.staffmode.StaffMode;
 import cl.bgmp.staff.staffmode.StaffModeListeners;
 import cl.bgmp.staff.vanishmode.VanishListeners;
@@ -21,6 +23,7 @@ public final class Staff extends JavaPlugin {
   private static Staff staff;
   private StaffMode staffMode;
   private VanishMode vanishMode;
+  private InventoryTracker inventoryTracker;
 
   @SuppressWarnings("rawtypes")
   private CommandsManager commandsManager;
@@ -37,6 +40,10 @@ public final class Staff extends JavaPlugin {
 
   public VanishMode getVanishMode() {
     return vanishMode;
+  }
+
+  public InventoryTracker getInventoryTracker() {
+    return inventoryTracker;
   }
 
   @SuppressWarnings("unchecked")
@@ -69,12 +76,13 @@ public final class Staff extends JavaPlugin {
     staff = this;
     staffMode = new StaffMode();
     vanishMode = new VanishMode(this);
+    inventoryTracker = new InventoryTracker(this, staffMode);
 
     commandsManager = new BukkitCommandsManager();
     commandRegistry = new CommandsManagerRegistration(this, commandsManager);
 
     registerEvents(new StaffModeListeners(staffMode, vanishMode), new VanishListeners(vanishMode));
-    registerCommands(StaffCommand.class, VanishCommand.class);
+    registerCommands(StaffCommand.class, VanishCommand.class, InventorySeeCommand.class);
   }
 
   @Override

@@ -22,7 +22,6 @@ import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -36,20 +35,6 @@ public class StaffModeListeners implements Listener {
   public StaffModeListeners(StaffMode staffMode, VanishMode vanishMode) {
     this.staffMode = staffMode;
     this.vanishMode = vanishMode;
-  }
-
-  @EventHandler(priority = EventPriority.HIGH)
-  public void onInventoryInspect(PlayerInteractEntityEvent event) {
-    Player clicker = event.getPlayer();
-    if (!staffMode.isEnabledFor(clicker)) return;
-
-    Entity entity = event.getRightClicked();
-    if (!(entity instanceof Player)) return;
-
-    Player clicked = (Player) entity;
-    if (!playerIsHoldingItem(clicker, staffMode.getItems().getInventoryInspect())) return;
-
-    clicker.openInventory(clicked.getInventory());
   }
 
   @EventHandler
@@ -111,6 +96,7 @@ public class StaffModeListeners implements Listener {
       staffMode.touchItems(clicker);
       return;
     }
+
     if (playerIsHoldingItem(clicker, staffMode.getItems().getDisableVanish())) {
       vanishMode.disableFor(clicker, Bukkit.getOnlinePlayers());
       staffMode.touchItems(clicker);
@@ -177,11 +163,6 @@ public class StaffModeListeners implements Listener {
 
   @EventHandler
   public void onBlockBreak(BlockBreakEvent event) {
-    if (staffMode.isEnabledFor(event.getPlayer())) event.setCancelled(true);
-  }
-
-  @EventHandler
-  public void onPlayerInteract(PlayerInteractEvent event) {
     if (staffMode.isEnabledFor(event.getPlayer())) event.setCancelled(true);
   }
 
