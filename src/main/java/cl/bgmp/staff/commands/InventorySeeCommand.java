@@ -26,7 +26,9 @@ public class InventorySeeCommand {
 
     String viewedPlayerName = args.getString(0);
     Player viewedPlayer = Bukkit.getPlayer(viewedPlayerName);
-    if (viewedPlayer != null) {
+    if (viewedPlayer == null)
+      sender.sendMessage(ChatColor.RED + ChatConstant.NO_SUCH_PLAYER.getMessage());
+    else {
       Player viewer = (Player) sender;
       Staff.get().getInventoryTracker().previewInventory(viewer, viewedPlayer.getInventory());
     }
