@@ -26,7 +26,7 @@ public class VanishListeners implements Listener {
     if (vanishMode.isEnabledFor(event.getPlayer())) event.setJoinMessage(null);
   }
 
-  @EventHandler
+  @EventHandler(priority = EventPriority.HIGHEST)
   public void onVanishedPlayerQuit(PlayerQuitEvent event) {
     if (!vanishMode.isEnabledFor(event.getPlayer())) return;
 
@@ -35,12 +35,12 @@ public class VanishListeners implements Listener {
   }
 
   /**
-   * Helps handling joining players in relation to already vanished individuals in memory, as
-   * Bukkit's hidePlayer() method isn't persistent
+   * Helps handling incoming players in relation to already vanished individuals in memory, as
+   * Bukkit's hidePlayer() method isn't persistent through logoffs
    *
    * @param event The join event to hook onto
    */
-  @EventHandler
+  @EventHandler(priority = EventPriority.MONITOR)
   public void restoreVanishOnJoin(PlayerJoinEvent event) {
     for (String vanishedPlayerName : vanishMode.getPlayers()) {
       Player vanishedPlayer = Bukkit.getPlayer(vanishedPlayerName);

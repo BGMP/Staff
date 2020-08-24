@@ -1,6 +1,7 @@
 package cl.bgmp.staff.inventorytracker;
 
 import cl.bgmp.staff.staffmode.StaffMode;
+import cl.bgmp.staff.util.items.ItemBuilder;
 import cl.bgmp.staff.util.items.Potions;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -17,6 +18,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -37,9 +39,7 @@ import org.bukkit.inventory.DoubleChestInventory;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemFlag;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -47,7 +47,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class InventoryTracker implements Listener {
   public static final Duration TICK = Duration.ofMillis(50);
 
-  private Plugin plugin;
   private StaffMode staffMode;
 
   protected final HashMap<String, InventoryTrackerEntry> monitoredInventories = new HashMap<>();
@@ -168,6 +167,37 @@ public class InventoryTracker implements Listener {
     }
   }
 
+  @EventHandler
+  public void cancelInventoryClicks(final InventoryClickEvent event) {
+    HumanEntity humanEntity = event.getWhoClicked();
+    if (!(humanEntity instanceof Player)) return;
+
+    Player player = (Player) humanEntity;
+    event.setCancelled(playerIsPreviewing(player));
+  }
+
+  @EventHandler
+  public void cancelInventoryDrags(final InventoryDragEvent event) {
+    HumanEntity humanEntity = event.getWhoClicked();
+    if (!(humanEntity instanceof Player)) return;
+
+    Player player = (Player) humanEntity;
+    event.setCancelled(playerIsPreviewing(player));
+  }
+
+  private boolean playerIsPreviewing(Player player) {
+    boolean isPreviewing = false;
+
+    for (InventoryTrackerEntry inventoryTrackerEntry : monitoredInventories.values()) {
+      if (inventoryTrackerEntry.getPreview().getHolder() == player) {
+        isPreviewing = true;
+        break;
+      }
+    }
+
+    return isPreviewing;
+  }
+
   @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
   public void updateMonitoredInventory(final InventoryClickEvent event) {
     this.scheduleCheck((Player) event.getWhoClicked());
@@ -226,6 +256,7 @@ public class InventoryTracker implements Listener {
 
       if (tracker.isPlayerInventory()) {
         Player holder = (Player) tracker.getPlayerInventory().getHolder();
+        assert holder != null;
         if (updater.getName().equals(holder.getName())) {
           this.previewPlayerInventory(
               Bukkit.getServer().getPlayerExact(pl), tracker.getPlayerInventory());
@@ -235,28 +266,45 @@ public class InventoryTracker implements Listener {
   }
 
   protected void previewPlayerInventory(Player viewer, PlayerInventory inventory) {
-    if (viewer == null) {
-      return;
-    }
+    if (viewer == null) return;
+    Inventory preview = buildPreview(inventory, viewer);
+    this.showInventoryPreview(viewer, inventory, preview);
+  }
 
-    Player holder = (Player) inventory.getHolder();
-    // Ensure that the title of the inventory is <= 32 characters long to appease Minecraft's
-    // restrictions on inventory titles
-    String title =
-        StringUtils.substring(holder == null ? "Inventory" : holder.getDisplayName(), 0, 32);
+  private Inventory buildPreview(PlayerInventory original, Player viewer) {
+    Player holder = (Player) original.getHolder();
+    Inventory preview = Bukkit.getServer().createInventory(viewer, 45, getInventoryTitle(holder));
 
-    Inventory preview = Bukkit.getServer().createInventory(viewer, 45, title);
+    assert holder != null;
 
-    // Handle inventory mapping
+    addItems(preview, original);
+    addArmor(preview, original);
+    addPotionEffectsItem(preview, holder);
+    addHungerItem(preview, holder);
+    addHealthItem(preview, holder);
+
+    return preview;
+  }
+
+  // Ensures that the title of the inventory is <= 32 characters long to appease Minecraft's
+  // restrictions on inventory titles
+  private String getInventoryTitle(Player holder) {
+    return StringUtils.substring(holder == null ? "Inventory" : holder.getDisplayName(), 0, 32);
+  }
+
+  // Handle inventory mapping
+  private void addItems(Inventory preview, PlayerInventory original) {
     for (int i = 0; i <= 35; i++) {
-      preview.setItem(getInventoryPreviewSlot(i), inventory.getItem(i));
+      preview.setItem(getInventoryPreviewSlot(i), original.getItem(i));
     }
+  }
 
-    // Potion Effects
+  // Potion Effects Item
+  private void addPotionEffectsItem(Inventory preview, Player holder) {
     boolean hasPotions = holder.getActivePotionEffects().size() > 0;
-    ItemStack potions = new ItemStack(hasPotions ? Material.POTION : Material.GLASS_BOTTLE);
-    ItemMeta potionMeta = potions.getItemMeta();
-    potionMeta.setDisplayName(ChatColor.AQUA.toString() + ChatColor.ITALIC + "Efectos Activos");
+    ItemBuilder effectsBottle =
+        new ItemBuilder(hasPotions ? Material.POTION : Material.GLASS_BOTTLE)
+            .setName(ChatColor.AQUA.toString() + ChatColor.ITALIC + "Efectos Activos");
 
     List<String> lore = Lists.newArrayList();
     if (hasPotions) {
@@ -270,39 +318,47 @@ public class InventoryTracker implements Listener {
     } else {
       lore.add(ChatColor.YELLOW + "Sin Efectos");
     }
-    potionMeta.setLore(lore);
-    potions.setItemMeta(potionMeta);
-    preview.setItem(6, potions);
 
-    // Hunger & Health
-    ItemStack hunger = new ItemStack(Material.COOKED_BEEF, holder.getFoodLevel());
-    ItemMeta hungerMeta = hunger.getItemMeta();
-    hungerMeta.setDisplayName(ChatColor.AQUA.toString() + ChatColor.ITALIC + "Hambre");
-    hungerMeta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
-    hunger.setItemMeta(hungerMeta);
-    preview.setItem(7, hunger);
-
-    ItemStack health = new ItemStack(Material.REDSTONE, (int) holder.getHealth());
-    ItemMeta healthMeta = health.getItemMeta();
-    healthMeta.setDisplayName(ChatColor.AQUA.toString() + ChatColor.ITALIC + "Salud");
-    healthMeta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
-    health.setItemMeta(healthMeta);
-    preview.setItem(8, health);
-
-    // Set armour manually because CraftBukkit is a derp
-    preview.setItem(0, inventory.getHelmet());
-    preview.setItem(1, inventory.getChestplate());
-    preview.setItem(2, inventory.getLeggings());
-    preview.setItem(3, inventory.getBoots());
-
-    this.showInventoryPreview(viewer, inventory, preview);
+    effectsBottle.setLore(lore.toArray(new String[0]));
+    preview.setItem(6, effectsBottle.build());
   }
 
-  // FIXME: Custom inventory titles are not passed over to the fake inventory
+  // Hunger Level Item
+  private void addHungerItem(Inventory preview, Player holder) {
+    ItemBuilder hungerItem =
+        new ItemBuilder(Material.COOKED_BEEF)
+            .setAmount(holder.getFoodLevel())
+            .setName(ChatColor.AQUA.toString() + ChatColor.ITALIC + "Hambre")
+            .addFlags(ItemFlag.HIDE_POTION_EFFECTS);
+    preview.setItem(7, hungerItem.build());
+  }
+
+  // Health Level Item
+  private void addHealthItem(Inventory preview, Player holder) {
+    ItemBuilder healthItem =
+        new ItemBuilder(Material.REDSTONE)
+            .setAmount((int) holder.getHealth())
+            .setName(ChatColor.AQUA.toString() + ChatColor.ITALIC + "Salud")
+            .addFlags(ItemFlag.HIDE_POTION_EFFECTS);
+    preview.setItem(8, healthItem.build());
+  }
+
+  private void addArmor(Inventory preview, PlayerInventory original) {
+    // Set armour manually because CraftBukkit is a derp
+    preview.setItem(0, original.getHelmet());
+    preview.setItem(1, original.getChestplate());
+    preview.setItem(2, original.getLeggings());
+    preview.setItem(3, original.getBoots());
+  }
+
+  public static int getInventoryPreviewSlot(int inventorySlot) {
+    if (inventorySlot < 9) return inventorySlot + 36; // Puts hotbar at the bottom
+    else return inventorySlot;
+  }
+
+  // FIXME: Custom inventory titles (when anvil-renamed) are not passed over to the fake inventory
   public void previewInventory(Player viewer, Inventory realInventory) {
-    if (viewer == null) {
-      return;
-    }
+    if (viewer == null) return;
 
     if (realInventory instanceof PlayerInventory) {
       previewPlayerInventory(viewer, (PlayerInventory) realInventory);
@@ -335,10 +391,5 @@ public class InventoryTracker implements Listener {
       this.monitoredInventories.put(viewer.getName(), entry);
       viewer.openInventory(fakeInventory);
     }
-  }
-
-  public static int getInventoryPreviewSlot(int inventorySlot) {
-    if (inventorySlot < 9) return inventorySlot + 36; // Puts hotbar at the bottom
-    else return inventorySlot;
   }
 }

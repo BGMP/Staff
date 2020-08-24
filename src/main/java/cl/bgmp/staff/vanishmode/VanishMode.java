@@ -59,10 +59,6 @@ public class VanishMode {
   }
 
   public void disableFor(Player vanished, Collection<? extends Player> playersFor) {
-    for (Player playerFor : playersFor) {
-      playerFor.showPlayer(plugin, vanished);
-    }
-
-    players.remove(vanished.getName());
+    disableFor(vanished, playersFor.toArray(new Player[0]));
   }
 }

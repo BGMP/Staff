@@ -19,7 +19,6 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityPickupItemEvent;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -108,7 +107,7 @@ public class StaffModeListeners implements Listener {
     return itemInMainHand.equals(itemStack);
   }
 
-  @EventHandler(priority = EventPriority.LOWEST)
+  @EventHandler(priority = EventPriority.HIGHEST)
   public void onPlayerJoin(PlayerJoinEvent event) {
     Player player = event.getPlayer();
     if (!player.hasPermission(Permissions.STAFF_MODE)) return;
@@ -130,16 +129,7 @@ public class StaffModeListeners implements Listener {
     if (!(damager instanceof Player)) return;
 
     Player player = (Player) damager;
-    if (staffMode.isEnabledFor(player)) event.setCancelled(true);
-  }
-
-  @EventHandler
-  public void onInventoryClick(InventoryClickEvent event) {
-    HumanEntity humanEntity = event.getWhoClicked();
-    if (!(humanEntity instanceof Player)) return;
-
-    Player player = (Player) humanEntity;
-    if (staffMode.isEnabledFor(player)) event.setCancelled(true);
+    event.setCancelled(staffMode.isEnabledFor(player));
   }
 
   @EventHandler
@@ -148,22 +138,22 @@ public class StaffModeListeners implements Listener {
     if (!(entity instanceof Player)) return;
 
     Player picker = (Player) entity;
-    if (staffMode.isEnabledFor(picker)) event.setCancelled(true);
+    event.setCancelled(staffMode.isEnabledFor(picker));
   }
 
   @EventHandler
   public void onItemDrop(PlayerDropItemEvent event) {
-    if (staffMode.isEnabledFor(event.getPlayer())) event.setCancelled(true);
+    event.setCancelled(staffMode.isEnabledFor(event.getPlayer()));
   }
 
   @EventHandler
   public void onBlockPlace(BlockPlaceEvent event) {
-    if (staffMode.isEnabledFor(event.getPlayer())) event.setCancelled(true);
+    event.setCancelled(staffMode.isEnabledFor(event.getPlayer()));
   }
 
   @EventHandler
   public void onBlockBreak(BlockBreakEvent event) {
-    if (staffMode.isEnabledFor(event.getPlayer())) event.setCancelled(true);
+    event.setCancelled(staffMode.isEnabledFor(event.getPlayer()));
   }
 
   @EventHandler(priority = EventPriority.LOW)
@@ -172,11 +162,11 @@ public class StaffModeListeners implements Listener {
     if (!(entity instanceof Player)) return;
 
     Player player = (Player) entity;
-    if (staffMode.isEnabledFor(player)) event.setCancelled(true);
+    event.setCancelled(staffMode.isEnabledFor(player));
   }
 
   @EventHandler(priority = EventPriority.LOW)
   public void onPlayerEnterBed(PlayerBedEnterEvent event) {
-    if (staffMode.isEnabledFor(event.getPlayer())) event.setCancelled(true);
+    event.setCancelled(staffMode.isEnabledFor(event.getPlayer()));
   }
 }

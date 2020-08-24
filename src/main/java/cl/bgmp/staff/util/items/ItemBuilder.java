@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -40,6 +41,13 @@ public class ItemBuilder {
 
   public ItemBuilder setDamage(short damage) {
     itemStack.setDurability(damage);
+    return this;
+  }
+
+  public ItemBuilder addFlags(ItemFlag... itemFlags) {
+    ItemMeta itemMeta = itemStack.getItemMeta();
+    itemMeta.addItemFlags(itemFlags);
+    itemStack.setItemMeta(itemMeta);
     return this;
   }
 
