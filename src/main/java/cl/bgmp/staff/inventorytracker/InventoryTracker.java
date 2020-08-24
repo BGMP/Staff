@@ -142,8 +142,7 @@ public class InventoryTracker implements Listener {
         // this is how we determine if we have a match
         if (inventory.getViewers().isEmpty()
             || tracker.getWatched().getViewers().isEmpty()
-            || inventory.getViewers().size() > tracker.getWatched().getViewers().size())
-          continue invLoop;
+            || inventory.getViewers().size() > tracker.getWatched().getViewers().size()) continue;
 
         for (int i = 0; i < inventory.getViewers().size(); i++) {
           if (!inventory.getViewers().get(i).equals(tracker.getWatched().getViewers().get(i))) {
@@ -173,7 +172,7 @@ public class InventoryTracker implements Listener {
     if (!(humanEntity instanceof Player)) return;
 
     Player player = (Player) humanEntity;
-    event.setCancelled(playerIsPreviewing(player));
+    event.setCancelled(playerIsPreviewing(player) || staffMode.isEnabledFor(player));
   }
 
   @EventHandler
@@ -182,7 +181,7 @@ public class InventoryTracker implements Listener {
     if (!(humanEntity instanceof Player)) return;
 
     Player player = (Player) humanEntity;
-    event.setCancelled(playerIsPreviewing(player));
+    event.setCancelled(playerIsPreviewing(player) || staffMode.isEnabledFor(player));
   }
 
   private boolean playerIsPreviewing(Player player) {
