@@ -124,6 +124,11 @@ public class StaffModeListeners implements Listener {
   }
 
   @EventHandler
+  public void onPlayerInteract(PlayerInteractEvent event) {
+    event.setCancelled(staffMode.isEnabledFor(event.getPlayer()));
+  }
+
+  @EventHandler
   public void onEntityDamagedByPlayer(EntityDamageByEntityEvent event) {
     Entity damager = event.getDamager();
     if (!(damager instanceof Player)) return;

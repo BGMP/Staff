@@ -101,7 +101,7 @@ public class InventoryTracker implements Listener {
     }
   }
 
-  @EventHandler
+  @EventHandler(ignoreCancelled = true)
   public void showInventories(PlayerInteractEvent event) {
     if (!canPreviewInventory(event.getPlayer())) return;
     if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
