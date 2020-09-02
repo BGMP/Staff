@@ -3,6 +3,8 @@ package cl.bgmp.staff.util.gui;
 import java.util.Objects;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.entity.HumanEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -51,6 +53,16 @@ public abstract class GUI {
         || !Objects.requireNonNull(getInventory().getItem(slot)).isSimilar(item)) {
       getInventory().setItem(slot, item);
     }
+  }
+
+  protected boolean playerClickedGUI(InventoryClickEvent event) {
+    if (!event.getInventory().equals(getInventory())) return false;
+
+    final Inventory clickedInventory = event.getClickedInventory();
+    if (clickedInventory == null || !clickedInventory.equals(getInventory())) return false;
+
+    HumanEntity humanEntity = event.getWhoClicked();
+    return humanEntity instanceof Player;
   }
 
   public abstract void onInventoryClick(InventoryClickEvent event);

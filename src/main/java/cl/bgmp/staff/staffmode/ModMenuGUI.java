@@ -7,12 +7,10 @@ import cl.bgmp.staff.util.items.ItemBuilder;
 import java.util.HashMap;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 public class ModMenuGUI extends GUI implements Listener {
@@ -62,14 +60,7 @@ public class ModMenuGUI extends GUI implements Listener {
   @Override
   @EventHandler
   public void onInventoryClick(InventoryClickEvent event) {
-    if (!event.getInventory().equals(getInventory())) return;
-    event.setCancelled(true);
-
-    final Inventory clickedInventory = event.getClickedInventory();
-    if (clickedInventory == null || !clickedInventory.equals(getInventory())) return;
-
-    HumanEntity humanEntity = event.getWhoClicked();
-    if (!(humanEntity instanceof Player)) return;
+    if (!playerClickedGUI(event)) return;
 
     Player player = (Player) event.getWhoClicked();
     int clickedSlot = event.getSlot();
