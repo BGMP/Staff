@@ -7,10 +7,10 @@ import cl.bgmp.staff.vanishmode.VanishMode;
 import com.sk89q.minecraft.util.commands.Command;
 import com.sk89q.minecraft.util.commands.CommandContext;
 import com.sk89q.minecraft.util.commands.CommandPermissions;
+import com.sk89q.minecraft.util.commands.CommandScopes;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 public class StaffCommand {
@@ -20,12 +20,8 @@ public class StaffCommand {
       desc = "Habilita el modo staff.",
       max = 0)
   @CommandPermissions("staff.staffmode")
+  @CommandScopes("player")
   public static void staff(final CommandContext args, final CommandSender sender) {
-    if (sender instanceof ConsoleCommandSender) {
-      sender.sendMessage(ChatColor.RED + ChatConstant.NO_CONSOLE.getMessage());
-      return;
-    }
-
     Player player = (Player) sender;
     StaffMode staffMode = Staff.get().getStaffMode();
     VanishMode vanishMode = Staff.get().getVanishMode();

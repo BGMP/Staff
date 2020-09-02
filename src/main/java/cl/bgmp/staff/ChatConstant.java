@@ -5,6 +5,7 @@ import org.bukkit.ChatColor;
 public enum ChatConstant {
   NO_PERMISSION("No tienes permiso para usar este comando."),
   NO_CONSOLE("Debes ser un jugador para ejecutar este comando."),
+  NO_PLAYER("Debes usar la consola para ejecutar este comando."),
   STAFF_MODE_ENABLED("Ahora estás en modo staff."),
   STAFF_MODE_DISABLED("Ya no estás en modo staff."),
   NO_SUCH_PLAYER("No se encontró ningún jugador con ese nombre."),

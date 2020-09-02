@@ -12,6 +12,7 @@ import com.sk89q.bukkit.util.BukkitCommandsManager;
 import com.sk89q.bukkit.util.CommandsManagerRegistration;
 import com.sk89q.minecraft.util.commands.*;
 import com.sk89q.minecraft.util.commands.CommandsManager;
+import java.util.Arrays;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -51,6 +52,13 @@ public final class Staff extends JavaPlugin {
   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
     try {
       this.commandsManager.execute(command.getName(), args, sender, sender);
+    } catch (ScopeMismatchException exception) {
+      String[] scopes = exception.getScopes();
+      if (!Arrays.asList(scopes).contains("player")) {
+        sender.sendMessage(ChatConstant.NO_PLAYER.getMessage());
+      } else {
+        sender.sendMessage(ChatColor.RED + ChatConstant.NO_CONSOLE.getMessage());
+      }
     } catch (CommandPermissionsException exception) {
       sender.sendMessage(ChatColor.RED + ChatConstant.NO_PERMISSION.getMessage());
     } catch (MissingNestedCommandException exception) {
