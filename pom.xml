@@ -78,16 +78,16 @@
 
     <repositories>
         <repository>
+            <id>bgm</id>
+            <url>https://maven.bgmp.cl/repo/</url>
+        </repository>
+        <repository>
             <id>destroystokyo-repo</id>
             <url>https://repo.destroystokyo.com/repository/maven-public/</url>
         </repository>
         <repository>
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
-        </repository>
-        <repository>
-            <id>bgm</id>
-            <url>https://bgmp.cl/</url>
         </repository>
     </repositories>
 
@@ -101,7 +101,7 @@
         <dependency>
             <groupId>com.sk89q</groupId>
             <artifactId>command-framework-bukkit</artifactId>
-            <version>1.9-SNAPSHOT</version>
+            <version>1.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.google.inject.extensions</groupId>
