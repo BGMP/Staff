@@ -1,11 +1,11 @@
 package cl.bgmp.staff.commands;
 
+import cl.bgmp.minecraft.util.commands.CommandContext;
+import cl.bgmp.minecraft.util.commands.annotations.Command;
+import cl.bgmp.minecraft.util.commands.annotations.CommandPermissions;
+import cl.bgmp.minecraft.util.commands.annotations.CommandScopes;
 import cl.bgmp.staff.ChatConstant;
 import cl.bgmp.staff.Staff;
-import com.sk89q.minecraft.util.commands.CommandContext;
-import com.sk89q.minecraft.util.commands.annotations.Command;
-import com.sk89q.minecraft.util.commands.annotations.CommandPermissions;
-import com.sk89q.minecraft.util.commands.annotations.CommandScopes;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
