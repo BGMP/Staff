@@ -166,7 +166,7 @@ public class InventoryTracker implements Listener {
     }
   }
 
-  @EventHandler
+  @EventHandler(priority = EventPriority.LOWEST)
   public void cancelInventoryClicks(final InventoryClickEvent event) {
     HumanEntity humanEntity = event.getWhoClicked();
     if (!(humanEntity instanceof Player)) return;
@@ -175,7 +175,7 @@ public class InventoryTracker implements Listener {
     event.setCancelled(playerIsPreviewing(player) || staffMode.isEnabledFor(player));
   }
 
-  @EventHandler
+  @EventHandler(priority = EventPriority.LOWEST)
   public void cancelInventoryDrags(final InventoryDragEvent event) {
     HumanEntity humanEntity = event.getWhoClicked();
     if (!(humanEntity instanceof Player)) return;
