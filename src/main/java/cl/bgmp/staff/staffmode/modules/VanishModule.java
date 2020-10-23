@@ -1,7 +1,6 @@
 package cl.bgmp.staff.staffmode.modules;
 
 import cl.bgmp.staff.Permissions;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import org.bukkit.Bukkit;
@@ -23,14 +22,14 @@ public class VanishModule extends StaffModeModule {
   }
 
   /**
-   * Vanishes a player from a group of other players
+   * Vanishes a player from the rest of the server, unless they have the permission "staff.vanish.see".
    *
-   * @param vanished The player being vanished
-   * @param playersFor Everyone the player in question will render vanished for
+   * @param vanished The player being vanished.
    */
-  public void enableFor(Player vanished, Player... playersFor) {
-    for (Player playerFor : playersFor) {
+  public void enableFor(Player vanished) {
+    for (Player playerFor : this.staff.getServer().getOnlinePlayers()) {
       if (playerFor.hasPermission(Permissions.VANISH_MODE_SEE)) continue;
+
       playerFor.hidePlayer(this.staff, vanished);
     }
 
@@ -38,25 +37,36 @@ public class VanishModule extends StaffModeModule {
   }
 
   /**
-   * UnVanishes a player from a group of other players
+   * UnVanishes a player from the rest of the server.
    *
-   * @param vanished The vanished player in question
-   * @param playersFor Everyone who the player will no longer render vanished for
+   * @param vanished The vanished player in question.
    */
-  public void disableFor(Player vanished, Player... playersFor) {
-    for (Player playerFor : playersFor) {
+  public void disableFor(Player vanished) {
+    for (Player playerFor : this.staff.getServer().getOnlinePlayers()) {
       playerFor.showPlayer(this.staff, vanished);
     }
 
     vanishedPlayers.remove(vanished.getName());
   }
 
-  public void enableFor(Player vanished, Collection<? extends Player> playersFor) {
-    this.enableFor(vanished, playersFor.toArray(new Player[0]));
+  /**
+   * Vanishes a player for another player in particular.
+   * @param vanished The vanished player.
+   * @param vanishedFor The player who the vanished player will effectively render vanished for.
+   */
+  public void enableForParticular(Player vanished, Player vanishedFor) {
+    if (vanishedFor.hasPermission(Permissions.VANISH_MODE_SEE)) return;
+
+    vanishedFor.hidePlayer(this.staff, vanished);
   }
 
-  public void disableFor(Player vanished, Collection<? extends Player> playersFor) {
-    this.disableFor(vanished, playersFor.toArray(new Player[0]));
+  /**
+   * Un-vanishes a player for another player in particular.
+   * @param unVanished The un-vanished player.
+   * @param unVanishedFor The player who the un-vanished player will effectively render un-vanished for.
+   */
+  public void disableForParticular(Player unVanished, Player unVanishedFor) {
+    unVanishedFor.showPlayer(this.staff, unVanished);
   }
 
   @EventHandler(priority = EventPriority.MONITOR)
@@ -70,7 +80,7 @@ public class VanishModule extends StaffModeModule {
   public void onVanishedPlayerQuit(PlayerQuitEvent event) {
     if (!this.isEnabledFor(event.getPlayer())) return;
 
-    this.disableFor(event.getPlayer(), Bukkit.getOnlinePlayers());
+    this.disableFor(event.getPlayer());
     event.setQuitMessage(null);
   }
 
@@ -84,7 +94,7 @@ public class VanishModule extends StaffModeModule {
   public void restoreVanishOnJoin(PlayerJoinEvent event) {
     for (String vanishedPlayerName : this.vanishedPlayers) {
       Player vanishedPlayer = Bukkit.getPlayer(vanishedPlayerName);
-      this.enableFor(vanishedPlayer, event.getPlayer());
+      this.enableForParticular(vanishedPlayer, event.getPlayer());
     }
   }
 
