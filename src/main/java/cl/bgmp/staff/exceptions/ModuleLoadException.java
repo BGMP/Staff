@@ -3,9 +3,7 @@ package cl.bgmp.staff.exceptions;
 import cl.bgmp.staff.module.Module;
 import javax.annotation.Nullable;
 
-/**
- * Thrown when a module fails to load.
- */
+/** Thrown when a module fails to load. */
 public class ModuleLoadException extends RuntimeException {
 
   private final @Nullable Class<? extends Module> key;
