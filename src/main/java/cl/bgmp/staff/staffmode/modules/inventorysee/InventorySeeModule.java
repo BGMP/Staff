@@ -1,10 +1,9 @@
-package cl.bgmp.staff.inventorytracker;
+package cl.bgmp.staff.staffmode.modules.inventorysee;
 
-import cl.bgmp.staff.staffmode.StaffMode;
-import cl.bgmp.staff.util.items.ItemBuilder;
-import cl.bgmp.staff.util.items.Potions;
+import cl.bgmp.butils.items.ItemBuilder;
+import cl.bgmp.staff.staffmode.modules.StaffModeModule;
+import cl.bgmp.staff.util.Potions;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.HashMap;
@@ -22,7 +21,7 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
@@ -40,29 +39,27 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class InventoryTracker implements Listener {
+public class InventorySeeModule extends StaffModeModule {
   public static final Duration TICK = Duration.ofMillis(50);
 
-  private StaffMode staffMode;
-
   protected final HashMap<String, InventoryTrackerEntry> monitoredInventories = new HashMap<>();
-  protected final HashMap<String, Instant> updateQueue = Maps.newHashMap();
+  protected final HashMap<String, Instant> updateQueue = new HashMap<>();
+  protected BukkitRunnable checkerTask;
 
-  public InventoryTracker(Plugin plugin, StaffMode staffMode) {
-    this.staffMode = staffMode;
+  public InventorySeeModule() {}
 
-    Bukkit.getPluginManager().registerEvents(this, plugin);
-
-    new BukkitRunnable() {
-      @Override
-      public void run() {
-        checkAllMonitoredInventories();
-      }
-    }.runTaskTimer(plugin, 0L, 20L);
+  private void newCheckerTask() {
+    this.checkerTask =
+        new BukkitRunnable() {
+          @Override
+          public void run() {
+            checkAllMonitoredInventories();
+          }
+        };
   }
 
   private void checkAllMonitoredInventories() {
@@ -390,5 +387,25 @@ public class InventoryTracker implements Listener {
       this.monitoredInventories.put(viewer.getName(), entry);
       viewer.openInventory(fakeInventory);
     }
+  }
+
+  @Override
+  public void load() {
+    PluginManager pm = this.staff.getServer().getPluginManager();
+    pm.registerEvents(this, this.staff);
+
+    this.newCheckerTask();
+    this.checkerTask.runTaskTimer(this.staff, 0L, 20L);
+  }
+
+  @Override
+  public void unload() {
+    HandlerList.unregisterAll(this);
+    this.checkerTask.cancel();
+  }
+
+  @Override
+  public boolean isEnabled() {
+    return true;
   }
 }

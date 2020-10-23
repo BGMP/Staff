@@ -1,4 +1,4 @@
-package cl.bgmp.staff.inventorytracker;
+package cl.bgmp.staff.staffmode.modules.inventorysee;
 
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.PlayerInventory;

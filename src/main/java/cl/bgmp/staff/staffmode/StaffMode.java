@@ -1,69 +1,66 @@
 package cl.bgmp.staff.staffmode;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Collectors;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
+import cl.bgmp.staff.Staff;
+import cl.bgmp.staff.staffmode.modules.VanishModule;
+import cl.bgmp.staff.staffmode.modules.hotbartools.HotBarToolsModule;
+import cl.bgmp.staff.staffmode.modules.inventorymemory.InventoryMemoryModule;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+import java.util.HashSet;
+import java.util.Set;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.plugin.PluginManager;
 
-public class StaffMode {
-  private StaffModeItems items = new StaffModeItems();
-  private InventoryMemory inventoryMemory = new InventoryMemory();
-  private ModMenuGUI menuGUI = new ModMenuGUI();
-  private List<String> players = new ArrayList<>();
+@Singleton
+public class StaffMode implements Listener {
+  private final Set<Player> users = new HashSet<>();
+  private final StaffModuleManager smm;
 
-  public StaffMode() {}
+  @Inject
+  public StaffMode(Staff staff, StaffModuleManager smm) {
+    this.smm = smm;
+
+    final PluginManager pm = staff.getServer().getPluginManager();
+    pm.registerEvents(this, staff);
+  }
+
+  public StaffModuleManager getStaffModuleManager() {
+    return smm;
+  }
 
   public boolean isEnabledFor(Player player) {
-    return players.contains(player.getName());
-  }
-
-  public StaffModeItems getItems() {
-    return items;
-  }
-
-  public ModMenuGUI getMenuGUI() {
-    return menuGUI;
-  }
-
-  public void disable() {
-    players.stream().map(Bukkit::getPlayer).collect(Collectors.toList()).forEach(this::disableFor);
+    return this.users.contains(player);
   }
 
   public void enableFor(Player player) {
-    inventoryMemory.backupInventoryFor(player);
-    wipePlayerInventory(player.getInventory());
+    final InventoryMemoryModule imm = this.smm.needModule(InventoryMemoryModule.class);
+    final HotBarToolsModule hbtm = this.smm.needModule(HotBarToolsModule.class);
+    final VanishModule vm = this.smm.needModule(VanishModule.class);
 
-    player.setExp(0.0F);
-    player.setGameMode(GameMode.CREATIVE);
-    touchItems(player);
+    if (imm != null) imm.savePlayerInventory(player);
+    if (hbtm != null) hbtm.deliverItemsTo(player);
+    if (vm != null) vm.enableFor(player);
 
-    players.add(player.getName());
+    this.users.add(player);
   }
 
   public void disableFor(Player player) {
-    wipePlayerInventory(player.getInventory());
-    inventoryMemory.restoreInventoryFor(player);
+    final InventoryMemoryModule imm = this.smm.needModule(InventoryMemoryModule.class);
+    final VanishModule vm = this.smm.needModule(VanishModule.class);
 
-    players.remove(player.getName());
+    if (imm != null) imm.restorePlayerInventory(player);
+    if (vm != null) vm.disableFor(player);
+
+    this.users.remove(player);
   }
 
-  public void touchItems(Player player) {
-    final HashMap<Integer, ItemStack> order = items.getMappedItemsFor(player);
-    for (int slot : order.keySet()) {
-      player.getInventory().setItem(slot, order.get(slot));
-    }
-  }
-
-  private void wipePlayerInventory(PlayerInventory playerInventory) {
-    playerInventory.clear();
-    playerInventory.setHelmet(null);
-    playerInventory.setChestplate(null);
-    playerInventory.setLeggings(null);
-    playerInventory.setBoots(null);
+  @EventHandler(priority = EventPriority.LOWEST)
+  public void onPlayerQuit(PlayerQuitEvent event) {
+    Player player = event.getPlayer();
+    if (this.isEnabledFor(player)) this.disableFor(player);
   }
 }

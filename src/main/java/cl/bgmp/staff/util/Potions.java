@@ -1,10 +1,11 @@
-package cl.bgmp.staff.util.items;
+package cl.bgmp.staff.util;
 
 import com.google.common.collect.ImmutableMap;
 import java.util.Map;
 import org.bukkit.potion.PotionEffectType;
 
 public interface Potions {
+
   static String potionEffectTypeName(final PotionEffectType type) {
     String name = POTION_EFFECT_MAP.get(type);
     if (name != null) {

@@ -1,7 +1,7 @@
 name: Staff
 version: ${project.version}
 main: cl.bgmp.staff.Staff
-api-version: '1.13'
-authors: [BGMP, Teszeo]
-description: Staff Utils
+api-version: "1.16"
+authors: [BGMP]
+description: Staff mode.
 website: https://unicraft.cl/
