@@ -20,6 +20,7 @@ public class InventorySeeCommand {
   @Command(
       aliases = {"invsee"},
       desc = "Revisa el inventario de un jugador.",
+      min = 1,
       max = 1)
   @CommandPermissions("staff.invsee")
   @CommandScopes("player")
