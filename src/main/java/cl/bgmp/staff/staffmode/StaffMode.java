@@ -28,6 +28,12 @@ public class StaffMode implements Listener {
     pm.registerEvents(this, staff);
   }
 
+  public void shutDown() {
+    for (Player user : users) {
+      this.disableFor(user);
+    }
+  }
+
   public StaffModuleManager getStaffModuleManager() {
     return smm;
   }
