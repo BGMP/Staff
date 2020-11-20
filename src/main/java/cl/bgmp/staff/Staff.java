@@ -2,7 +2,6 @@ package cl.bgmp.staff;
 
 import cl.bgmp.bukkit.util.BukkitCommandsManager;
 import cl.bgmp.bukkit.util.CommandsManagerRegistration;
-import cl.bgmp.minecraft.util.commands.CommandsManager;
 import cl.bgmp.minecraft.util.commands.annotations.TabCompletion;
 import cl.bgmp.minecraft.util.commands.exceptions.CommandException;
 import cl.bgmp.minecraft.util.commands.exceptions.CommandPermissionsException;
@@ -32,7 +31,7 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Staff extends JavaPlugin {
-  private CommandsManager commandsManager = new BukkitCommandsManager();
+  private BukkitCommandsManager commandsManager = new BukkitCommandsManager();
   private AllTranslations translations;
 
   @Inject private StaffMode staffMode;
