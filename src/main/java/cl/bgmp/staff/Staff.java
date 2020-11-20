@@ -63,6 +63,11 @@ public final class Staff extends JavaPlugin {
     this.registerCommands();
   }
 
+  @Override
+  public void onDisable() {
+    this.staffMode.shutDown();
+  }
+
   public void registerCommands() {
     this.registerCommand(StaffModeCommand.class, this.staffMode);
     this.registerCommand(InventorySeeCommand.class, this.ism);
