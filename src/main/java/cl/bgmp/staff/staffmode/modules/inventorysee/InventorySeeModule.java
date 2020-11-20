@@ -257,6 +257,11 @@ public class InventorySeeModule extends StaffModeModule {
           this.previewPlayerInventory(
               Bukkit.getServer().getPlayerExact(pl), tracker.getPlayerInventory());
         }
+      } else {
+        InventoryHolder holder = tracker.getWatched().getHolder();
+        assert holder != null;
+
+        this.previewInventory(Bukkit.getServer().getPlayerExact(pl), holder.getInventory());
       }
     }
   }
@@ -365,6 +370,7 @@ public class InventorySeeModule extends StaffModeModule {
       } else {
         fakeInventory = Bukkit.createInventory(viewer, realInventory.getType());
       }
+
       fakeInventory.setContents(realInventory.getContents());
 
       this.showInventoryPreview(viewer, realInventory, fakeInventory);
