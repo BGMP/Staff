@@ -15,7 +15,9 @@ import cl.bgmp.staff.commands.StaffModeCommand;
 import cl.bgmp.staff.injection.StaffModule;
 import cl.bgmp.staff.staffmode.StaffMode;
 import cl.bgmp.staff.staffmode.StaffModuleManager;
+import cl.bgmp.staff.staffmode.modules.ClearChatModule;
 import cl.bgmp.staff.staffmode.modules.EnvironmentControlModule;
+import cl.bgmp.staff.staffmode.modules.MuteChatModule;
 import cl.bgmp.staff.staffmode.modules.VanishModule;
 import cl.bgmp.staff.staffmode.modules.hotbartools.HotBarToolsModule;
 import cl.bgmp.staff.staffmode.modules.inventorymemory.InventoryMemoryModule;
@@ -40,6 +42,8 @@ public final class Staff extends JavaPlugin {
   @Inject private InventoryMemoryModule imm;
   @Inject private VanishModule vm;
   @Inject private InventorySeeModule ism;
+  @Inject private ClearChatModule ccm;
+  @Inject private MuteChatModule mcm;
 
   @Override
   public void onEnable() {
@@ -52,6 +56,8 @@ public final class Staff extends JavaPlugin {
     smm.registerModule(imm);
     smm.registerModule(vm);
     smm.registerModule(ism);
+    smm.registerModule(ccm);
+    smm.registerModule(mcm);
     smm.loadModules();
 
     this.registerCommands();
