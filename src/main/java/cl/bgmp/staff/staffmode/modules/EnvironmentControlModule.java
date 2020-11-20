@@ -15,32 +15,32 @@ import org.bukkit.event.vehicle.VehicleEnterEvent;
 
 public class EnvironmentControlModule extends StaffModeModule {
 
-  @EventHandler(priority = EventPriority.LOWEST)
+  @EventHandler(priority = EventPriority.HIGH)
   public void onBlockPlace(BlockPlaceEvent event) {
     event.setCancelled(this.staffMode.isEnabledFor(event.getPlayer()));
   }
 
-  @EventHandler(priority = EventPriority.LOWEST)
+  @EventHandler(priority = EventPriority.HIGH)
   public void onBlockBreak(BlockBreakEvent event) {
     event.setCancelled(this.staffMode.isEnabledFor(event.getPlayer()));
   }
 
-  @EventHandler(priority = EventPriority.LOWEST)
+  @EventHandler(priority = EventPriority.HIGH)
   public void onPlayerInteract(PlayerInteractEvent event) {
     event.setCancelled(this.staffMode.isEnabledFor(event.getPlayer()));
   }
 
-  @EventHandler(priority = EventPriority.LOWEST)
+  @EventHandler(priority = EventPriority.HIGH)
   public void onItemDrop(PlayerDropItemEvent event) {
     event.setCancelled(this.staffMode.isEnabledFor(event.getPlayer()));
   }
 
-  @EventHandler(priority = EventPriority.LOWEST)
+  @EventHandler(priority = EventPriority.HIGH)
   public void onPlayerEnterBed(PlayerBedEnterEvent event) {
     event.setCancelled(this.staffMode.isEnabledFor(event.getPlayer()));
   }
 
-  @EventHandler(priority = EventPriority.LOWEST)
+  @EventHandler(priority = EventPriority.HIGH)
   public void onPlayerRideVehicle(VehicleEnterEvent event) {
     Entity entity = event.getEntered();
     if (!(entity instanceof Player)) return;
@@ -49,7 +49,7 @@ public class EnvironmentControlModule extends StaffModeModule {
     event.setCancelled(this.staffMode.isEnabledFor(player));
   }
 
-  @EventHandler(priority = EventPriority.LOWEST)
+  @EventHandler(priority = EventPriority.HIGH)
   public void onEntityDamagedByPlayer(EntityDamageByEntityEvent event) {
     Entity damager = event.getDamager();
     if (!(damager instanceof Player)) return;
@@ -58,7 +58,7 @@ public class EnvironmentControlModule extends StaffModeModule {
     event.setCancelled(staffMode.isEnabledFor(player));
   }
 
-  @EventHandler(priority = EventPriority.LOWEST)
+  @EventHandler(priority = EventPriority.HIGH)
   public void onItemPickupByPlayer(EntityPickupItemEvent event) {
     Entity entity = event.getEntity();
     if (!(entity instanceof Player)) return;

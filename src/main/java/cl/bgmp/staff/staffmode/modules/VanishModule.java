@@ -22,7 +22,8 @@ public class VanishModule extends StaffModeModule {
   }
 
   /**
-   * Vanishes a player from the rest of the server, unless they have the permission "staff.vanish.see".
+   * Vanishes a player from the rest of the server, unless they have the permission
+   * "staff.vanish.see".
    *
    * @param vanished The player being vanished.
    */
@@ -51,6 +52,7 @@ public class VanishModule extends StaffModeModule {
 
   /**
    * Vanishes a player for another player in particular.
+   *
    * @param vanished The vanished player.
    * @param vanishedFor The player who the vanished player will effectively render vanished for.
    */
@@ -62,8 +64,10 @@ public class VanishModule extends StaffModeModule {
 
   /**
    * Un-vanishes a player for another player in particular.
+   *
    * @param unVanished The un-vanished player.
-   * @param unVanishedFor The player who the un-vanished player will effectively render un-vanished for.
+   * @param unVanishedFor The player who the un-vanished player will effectively render un-vanished
+   *     for.
    */
   public void disableForParticular(Player unVanished, Player unVanishedFor) {
     unVanishedFor.showPlayer(this.staff, unVanished);
