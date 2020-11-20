@@ -50,7 +50,7 @@
         <dependency>
             <groupId>cl.bgmp</groupId>
             <artifactId>BUtils</artifactId>
-            <version>1.0.3.pre-SNAPSHOT</version>
+            <version>1.0.4.pre-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.google.inject.extensions</groupId>
@@ -90,11 +90,11 @@
                             <createDependencyReducedPom>false</createDependencyReducedPom>
                             <artifactSet>
                                 <includes>
+                                    <include>aopalliance:aopalliance</include>
                                     <include>cl.bgmp:command-framework-bukkit</include>
                                     <include>cl.bgmp:BUtils</include>
                                     <include>com.google.inject:guice</include>
                                     <include>javax.inject:javax.inject</include>
-                                    <include>aopalliance:aopalliance</include>
                                 </includes>
                             </artifactSet>
                             <filters>
