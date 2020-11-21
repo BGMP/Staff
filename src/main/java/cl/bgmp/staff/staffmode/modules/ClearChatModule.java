@@ -2,12 +2,13 @@ package cl.bgmp.staff.staffmode.modules;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class ClearChatModule extends StaffModeModule {
   private static final int LINES = 150;
 
-  public void clearChatBy(Player clearer) {
+  public void clearChatBy(CommandSender clearer) {
     for (int i = 0; i < LINES; i++) {
       for (Player player : this.staff.getServer().getOnlinePlayers()) {
         player.sendMessage("");

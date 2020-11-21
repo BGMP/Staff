@@ -3,7 +3,7 @@ package cl.bgmp.staff.staffmode.modules;
 import com.google.inject.Singleton;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
+import org.bukkit.command.CommandSender;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
@@ -12,7 +12,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 public class MuteChatModule extends StaffModeModule {
   private boolean muted = false;
 
-  public void muteChatBy(Player muter) {
+  public void muteChatBy(CommandSender muter) {
     if (this.muted) {
       Bukkit.broadcastMessage(
           ChatColor.GREEN + "Chat has been unmuted by " + ChatColor.RESET + muter.getName());

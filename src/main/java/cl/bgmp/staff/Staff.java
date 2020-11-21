@@ -10,7 +10,9 @@ import cl.bgmp.minecraft.util.commands.exceptions.MissingNestedCommandException;
 import cl.bgmp.minecraft.util.commands.exceptions.ScopeMismatchException;
 import cl.bgmp.minecraft.util.commands.exceptions.WrappedCommandException;
 import cl.bgmp.minecraft.util.commands.injection.SimpleInjector;
+import cl.bgmp.staff.commands.ClearChatCommand;
 import cl.bgmp.staff.commands.InventorySeeCommand;
+import cl.bgmp.staff.commands.MuteChatCommand;
 import cl.bgmp.staff.commands.StaffModeCommand;
 import cl.bgmp.staff.injection.StaffModule;
 import cl.bgmp.staff.staffmode.StaffMode;
@@ -71,6 +73,8 @@ public final class Staff extends JavaPlugin {
   public void registerCommands() {
     this.registerCommand(StaffModeCommand.class, this.staffMode);
     this.registerCommand(InventorySeeCommand.class, this.ism);
+    this.registerCommand(ClearChatCommand.class, this.ccm);
+    this.registerCommand(MuteChatCommand.class, this.mcm);
   }
 
   private void inject() {
