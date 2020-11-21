@@ -1,9 +1,11 @@
 package cl.bgmp.staff.staffmode.modules;
 
+import cl.bgmp.staff.Permissions;
 import com.google.inject.Singleton;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
@@ -28,8 +30,11 @@ public class MuteChatModule extends StaffModeModule {
   public void onPlayerChat(AsyncPlayerChatEvent event) {
     if (!this.muted) return;
 
+    Player player = event.getPlayer();
+    if (player.hasPermission(Permissions.MUTE_CHAT_BYPASS)) return;
+
     event.setCancelled(true);
-    event.getPlayer().sendMessage(ChatColor.RED + "Chat is muted!");
+    player.sendMessage(ChatColor.RED + "Chat is muted!");
   }
 
   @Override
