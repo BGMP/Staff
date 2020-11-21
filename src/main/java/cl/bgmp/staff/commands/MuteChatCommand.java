@@ -8,19 +8,19 @@ import cl.bgmp.staff.staffmode.modules.MuteChatModule;
 import org.bukkit.command.CommandSender;
 
 public class MuteChatCommand {
-    private MuteChatModule mcm;
+  private MuteChatModule mcm;
 
-    public MuteChatCommand(MuteChatModule mcm) {
-        this.mcm = mcm;
-    }
+  public MuteChatCommand(MuteChatModule mcm) {
+    this.mcm = mcm;
+  }
 
-    @Command(
-            aliases = {"mutechat"},
-            desc = "Silencia el chat.",
-            max = 0)
-    @CommandPermissions("staff.mutechat")
-    @CommandScopes({"player", "console"})
-    public void staffMode(CommandContext args, CommandSender sender) {
-        this.mcm.muteChatBy(sender);
-    }
+  @Command(
+      aliases = {"mutechat"},
+      desc = "Silencia el chat.",
+      max = 0)
+  @CommandPermissions("staff.mutechat")
+  @CommandScopes({"player", "console"})
+  public void staffMode(CommandContext args, CommandSender sender) {
+    this.mcm.muteChatBy(sender);
+  }
 }

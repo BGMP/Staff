@@ -8,19 +8,19 @@ import cl.bgmp.staff.staffmode.modules.ClearChatModule;
 import org.bukkit.command.CommandSender;
 
 public class ClearChatCommand {
-    private ClearChatModule ccm;
+  private ClearChatModule ccm;
 
-    public ClearChatCommand(ClearChatModule ccm) {
-        this.ccm = ccm;
-    }
+  public ClearChatCommand(ClearChatModule ccm) {
+    this.ccm = ccm;
+  }
 
-    @Command(
-            aliases = {"clearchat"},
-            desc = "Limpia el chat.",
-            max = 0)
-    @CommandPermissions("staff.clearchat")
-    @CommandScopes({"player", "console"})
-    public void staffMode(CommandContext args, CommandSender sender) {
-        this.ccm.clearChatBy(sender);
-    }
+  @Command(
+      aliases = {"clearchat"},
+      desc = "Limpia el chat.",
+      max = 0)
+  @CommandPermissions("staff.clearchat")
+  @CommandScopes({"player", "console"})
+  public void staffMode(CommandContext args, CommandSender sender) {
+    this.ccm.clearChatBy(sender);
+  }
 }
