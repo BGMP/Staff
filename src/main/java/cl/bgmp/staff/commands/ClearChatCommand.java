@@ -4,6 +4,7 @@ import cl.bgmp.minecraft.util.commands.CommandContext;
 import cl.bgmp.minecraft.util.commands.annotations.Command;
 import cl.bgmp.minecraft.util.commands.annotations.CommandPermissions;
 import cl.bgmp.minecraft.util.commands.annotations.CommandScopes;
+import cl.bgmp.staff.Permissions;
 import cl.bgmp.staff.staffmode.modules.ClearChatModule;
 import org.bukkit.command.CommandSender;
 
@@ -18,7 +19,7 @@ public class ClearChatCommand {
       aliases = {"clearchat"},
       desc = "Limpia el chat.",
       max = 0)
-  @CommandPermissions("staff.clearchat")
+  @CommandPermissions(Permissions.CLEAR_CHAT)
   @CommandScopes({"player", "console"})
   public void staffMode(CommandContext args, CommandSender sender) {
     this.ccm.clearChatBy(sender);
