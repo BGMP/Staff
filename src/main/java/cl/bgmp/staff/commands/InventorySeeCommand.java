@@ -4,6 +4,7 @@ import cl.bgmp.minecraft.util.commands.CommandContext;
 import cl.bgmp.minecraft.util.commands.annotations.Command;
 import cl.bgmp.minecraft.util.commands.annotations.CommandPermissions;
 import cl.bgmp.minecraft.util.commands.annotations.CommandScopes;
+import cl.bgmp.staff.Permissions;
 import cl.bgmp.staff.staffmode.modules.inventorysee.InventorySeeModule;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -22,7 +23,7 @@ public class InventorySeeCommand {
       desc = "Revisa el inventario de un jugador.",
       min = 1,
       max = 1)
-  @CommandPermissions("staff.invsee")
+  @CommandPermissions(Permissions.INVSEE)
   @CommandScopes("player")
   public void staffMode(CommandContext args, CommandSender sender) {
     final String viewedPlayerName = args.getString(0);
