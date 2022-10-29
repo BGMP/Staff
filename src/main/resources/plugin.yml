@@ -1,6 +1,6 @@
 name: Staff
 version: ${project.version}
-main: Staff
+main: cl.bgm.Staff
 api-version: "1.16"
 authors: [BGMP]
 description: Staff mode.
