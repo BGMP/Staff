@@ -1,0 +1,36 @@
+package cl.bgm.staff.staffmode.modules.hotbartools.hotbarbuttons;
+
+import cl.bgm.butils.gui.GUIButton;
+import cl.bgm.butils.items.ItemBuilder;
+import cl.bgm.staff.staffmode.StaffModuleManager;
+import cl.bgm.staff.staffmode.modules.VanishModule;
+import com.google.inject.Inject;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+
+public class VanishButton extends GUIButton {
+  private final StaffModuleManager smm;
+  private final ItemStack vanishOffVariant =
+      new ItemBuilder(Material.LEVER).setName("&f&lVanish &c&lOFF").build();
+
+  @Inject
+  public VanishButton(StaffModuleManager smm) {
+    super(new ItemBuilder(Material.REDSTONE_TORCH).setName("&f&lVanish &a&lON").build(), 2);
+    this.smm = smm;
+  }
+
+  @Override
+  public void clickBy(Player player) {
+    final VanishModule vm = this.smm.needModule(VanishModule.class);
+    if (vm == null) return;
+
+    if (vm.isEnabledFor(player)) {
+      vm.disableFor(player);
+      player.getInventory().setItem(this.getSlot(), this.vanishOffVariant);
+    } else {
+      vm.enableFor(player);
+      player.getInventory().setItem(this.getSlot(), this.itemStack);
+    }
+  }
+}

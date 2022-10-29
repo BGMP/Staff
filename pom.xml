@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>cl.bgmp</groupId>
+    <groupId>cl.bgm</groupId>
     <artifactId>Staff</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
@@ -30,7 +30,7 @@
         </repository>
         <repository>
             <id>bgm</id>
-            <url>https://maven.bgmp.cl/</url>
+            <url>https://maven.bgm.cl/</url>
         </repository>
     </repositories>
 
@@ -42,14 +42,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>cl.bgmp</groupId>
+            <groupId>cl.bgm</groupId>
             <artifactId>command-framework-bukkit</artifactId>
             <version>1.0.3-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>cl.bgmp</groupId>
-            <artifactId>BUtils</artifactId>
-            <version>1.0.25.pre-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.google.inject.extensions</groupId>
@@ -90,7 +85,8 @@
                             <artifactSet>
                                 <includes>
                                     <include>cl.bgmp:command-framework-bukkit</include>
-                                    <include>cl.bgmp:BUtils</include>
+                                    <include>aopalliance:aopalliance</include>
+                                    <include>cl.bgm:command-framework-bukkit</include>
                                     <include>com.google.inject:guice</include>
                                     <include>javax.inject:javax.inject</include>
                                     <include>aopalliance:aopalliance</include>
