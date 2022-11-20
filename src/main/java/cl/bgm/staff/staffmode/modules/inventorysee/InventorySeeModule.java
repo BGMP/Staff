@@ -312,7 +312,7 @@ public class InventorySeeModule extends StaffModeModule {
     boolean hasPotions = holder.getActivePotionEffects().size() > 0;
     ItemBuilder effectsBottle =
         new ItemBuilder(hasPotions ? Material.POTION : Material.GLASS_BOTTLE)
-            .setName(ChatColor.AQUA.toString() + ChatColor.ITALIC + "Efectos Activos");
+            .setName(ChatColor.AQUA.toString() + ChatColor.ITALIC + "Active Effects");
 
     List<String> lore = Lists.newArrayList();
     if (hasPotions) {
@@ -336,7 +336,7 @@ public class InventorySeeModule extends StaffModeModule {
     ItemBuilder hungerItem =
         new ItemBuilder(Material.COOKED_BEEF)
             .setAmount(holder.getFoodLevel())
-            .setName(ChatColor.AQUA.toString() + ChatColor.ITALIC + "Hambre")
+            .setName(ChatColor.AQUA.toString() + ChatColor.ITALIC + "Hunger")
             .addFlags(ItemFlag.HIDE_POTION_EFFECTS);
     preview.setItem(7, hungerItem.build());
   }
@@ -346,7 +346,7 @@ public class InventorySeeModule extends StaffModeModule {
     ItemBuilder healthItem =
         new ItemBuilder(Material.REDSTONE)
             .setAmount((int) holder.getHealth())
-            .setName(ChatColor.AQUA.toString() + ChatColor.ITALIC + "Salud")
+            .setName(ChatColor.AQUA.toString() + ChatColor.ITALIC + "Health")
             .addFlags(ItemFlag.HIDE_POTION_EFFECTS);
     preview.setItem(8, healthItem.build());
   }
