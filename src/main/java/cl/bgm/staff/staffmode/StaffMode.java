@@ -8,6 +8,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import java.util.HashSet;
 import java.util.Set;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -50,6 +51,8 @@ public class StaffMode implements Listener {
     if (imm != null) imm.savePlayerInventory(player);
     if (hbtm != null) hbtm.deliverItemsTo(player);
     if (vm != null) vm.enableFor(player);
+
+    player.setGameMode(GameMode.CREATIVE);
 
     this.users.add(player);
   }
