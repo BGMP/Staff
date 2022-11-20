@@ -15,7 +15,7 @@ public class ClearChatButton extends GUIButton {
     super(
         new ItemBuilder(Material.GREEN_WOOL)
             .setName("&e&lClear Chat")
-            .setLore("&7Click derecho para limpiar el chat.")
+            .setLore("&Right-click to clear chat")
             .build(),
         14);
 

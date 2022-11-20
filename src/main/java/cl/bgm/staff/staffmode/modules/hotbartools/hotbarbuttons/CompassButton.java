@@ -11,7 +11,7 @@ public class CompassButton extends GUIButton {
     super(
         new ItemBuilder(Material.COMPASS)
             .setName("&9&lTeleportation Tool")
-            .setLore("&7Click derecho para teletransportarte.")
+            .setLore("&7Right-click to teleport")
             .build(),
         0);
   }

@@ -15,7 +15,7 @@ public class MuteChatButton extends GUIButton {
     super(
         new ItemBuilder(Material.GREEN_WOOL)
             .setName("&c&lMute/UnMute Chat")
-            .setLore("&7Click derecho para", "&7mutear/desmutear el chat.")
+            .setLore("&7Right-click to", "&7mute/unmute the chat")
             .build(),
         12);
 

@@ -14,7 +14,7 @@ public class MenuButton extends GUIButton {
     super(
         new ItemBuilder(Material.CHEST)
             .setName("&e&lMenu")
-            .setLore("&7&lClick derecho para abrir.")
+            .setLore("&7&lRight-click to open")
             .build(),
         7);
     this.menuButtonGUI = menuButtonGUI;
