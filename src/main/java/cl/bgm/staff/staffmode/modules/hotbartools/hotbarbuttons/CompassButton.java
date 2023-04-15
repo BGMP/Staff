@@ -1,7 +1,7 @@
 package cl.bgm.staff.staffmode.modules.hotbartools.hotbarbuttons;
 
-import cl.bgm.butils.gui.GUIButton;
-import cl.bgm.butils.items.ItemBuilder;
+import cl.bgm.staff.util.ItemBuilder;
+import cl.bgm.staff.util.gui.GUIButton;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
@@ -17,5 +17,5 @@ public class CompassButton extends GUIButton {
   }
 
   @Override
-  public void clickBy(Player player) {} // WorldEdit's teleport tool
+  public void click(Player player) {} // WorldEdit's teleport tool
 }

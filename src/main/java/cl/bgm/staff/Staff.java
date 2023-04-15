@@ -26,7 +26,7 @@ import cl.bgm.staff.staffmode.modules.freeze.PlayerFreezeModule;
 import cl.bgm.staff.staffmode.modules.hotbartools.HotBarToolsModule;
 import cl.bgm.staff.staffmode.modules.inventorymemory.InventoryMemoryModule;
 import cl.bgm.staff.staffmode.modules.inventorysee.InventorySeeModule;
-import cl.bgm.staff.translations.AllTranslations;
+import cl.bgm.staff.translations.Translations;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import java.util.Arrays;
@@ -38,7 +38,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Staff extends JavaPlugin {
   private BukkitCommandsManager commandsManager = new BukkitCommandsManager();
-  private AllTranslations translations;
+  private Translations translations;
 
   @Inject private StaffMode staffMode;
   @Inject private EnvironmentControlModule ecm;
@@ -52,7 +52,10 @@ public final class Staff extends JavaPlugin {
 
   @Override
   public void onEnable() {
-    this.translations = new AllTranslations();
+    // Set classloader for translations
+    Thread.currentThread().setContextClassLoader(this.getClassLoader());
+    this.translations = new Translations();
+
     this.inject();
 
     final StaffModuleManager smm = this.staffMode.getStaffModuleManager();
@@ -75,7 +78,7 @@ public final class Staff extends JavaPlugin {
   }
 
   public void registerCommands() {
-    this.registerCommand(StaffModeCommand.class, this.staffMode);
+    this.registerCommand(StaffModeCommand.class, this.staffMode, this.translations);
     this.registerCommand(InventorySeeCommand.class, this.ism);
     this.registerCommand(ClearChatCommand.class, this.ccm);
     this.registerCommand(MuteChatCommand.class, this.mcm);

@@ -1,6 +1,5 @@
 package cl.bgm.staff.staffmode.modules.hotbartools;
 
-import cl.bgm.butils.gui.GUIButton;
 import cl.bgm.staff.staffmode.StaffMode;
 import cl.bgm.staff.staffmode.modules.StaffModeModule;
 import cl.bgm.staff.staffmode.modules.hotbartools.hotbarbuttons.CompassButton;
@@ -9,6 +8,7 @@ import cl.bgm.staff.staffmode.modules.hotbartools.hotbarbuttons.RabbitFootButton
 import cl.bgm.staff.staffmode.modules.hotbartools.hotbarbuttons.RandomTeleportButton;
 import cl.bgm.staff.staffmode.modules.hotbartools.hotbarbuttons.VanishButton;
 import cl.bgm.staff.staffmode.modules.hotbartools.hotbarbuttons.menubutton.MenuButton;
+import cl.bgm.staff.util.gui.GUIButton;
 import com.google.common.collect.ImmutableSet;
 import com.google.inject.Inject;
 import java.util.Set;
@@ -56,7 +56,7 @@ public class HotBarToolsModule extends StaffModeModule {
     final int slot = clicker.getInventory().getHeldItemSlot();
     for (GUIButton button : this.buttons) {
       if (slot == button.getSlot()) {
-        button.clickBy(clicker);
+        button.click(clicker);
       }
     }
   }

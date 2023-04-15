@@ -1,8 +1,8 @@
 package cl.bgm.staff.staffmode.modules.inventorysee;
 
-import cl.bgm.butils.items.ItemBuilder;
 import cl.bgm.staff.staffmode.modules.StaffModeModule;
 import cl.bgm.staff.staffmode.modules.freeze.PlayerFreezeModule;
+import cl.bgm.staff.util.ItemBuilder;
 import cl.bgm.staff.util.Potions;
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;

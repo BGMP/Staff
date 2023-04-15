@@ -1,9 +1,9 @@
 package cl.bgm.staff.staffmode.modules.hotbartools.hotbarbuttons.menubutton;
 
-import cl.bgm.butils.chat.Chat;
-import cl.bgm.butils.gui.GUI;
-import cl.bgm.butils.gui.GUIButton;
 import cl.bgm.staff.Staff;
+import cl.bgm.staff.util.Chat;
+import cl.bgm.staff.util.gui.GUI;
+import cl.bgm.staff.util.gui.GUIButton;
 import com.google.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;

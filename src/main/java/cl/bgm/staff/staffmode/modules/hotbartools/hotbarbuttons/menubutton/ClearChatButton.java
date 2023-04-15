@@ -1,8 +1,8 @@
 package cl.bgm.staff.staffmode.modules.hotbartools.hotbarbuttons.menubutton;
 
-import cl.bgm.butils.gui.GUIButton;
-import cl.bgm.butils.items.ItemBuilder;
 import cl.bgm.staff.staffmode.modules.ClearChatModule;
+import cl.bgm.staff.util.ItemBuilder;
+import cl.bgm.staff.util.gui.GUIButton;
 import com.google.inject.Inject;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -23,7 +23,7 @@ public class ClearChatButton extends GUIButton {
   }
 
   @Override
-  public void clickBy(Player player) {
+  public void click(Player player) {
     this.ccm.clearChatBy(player);
   }
 }

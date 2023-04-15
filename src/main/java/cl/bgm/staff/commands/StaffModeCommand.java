@@ -6,15 +6,18 @@ import cl.bgm.minecraft.util.commands.annotations.CommandPermissions;
 import cl.bgm.minecraft.util.commands.annotations.CommandScopes;
 import cl.bgm.staff.Permissions;
 import cl.bgm.staff.staffmode.StaffMode;
+import cl.bgm.staff.translations.Translations;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class StaffModeCommand {
   private final StaffMode staffMode;
+  private final Translations translations;
 
-  public StaffModeCommand(StaffMode staffMode) {
+  public StaffModeCommand(StaffMode staffMode, Translations translations) {
     this.staffMode = staffMode;
+    this.translations = translations;
   }
 
   @Command(
@@ -28,10 +31,10 @@ public class StaffModeCommand {
 
     if (this.staffMode.isEnabledFor(player)) {
       this.staffMode.disableFor(player);
-      player.sendMessage(ChatColor.RED + "You're no longer in staff mode.");
+      player.sendMessage(ChatColor.RED + translations.get("staff.staffmode.disabled", player));
     } else {
       this.staffMode.enableFor(player);
-      player.sendMessage(ChatColor.GREEN + "You're now in staff mode.");
+      player.sendMessage(ChatColor.GREEN + translations.get("staff.staffmode.enabled", player));
     }
   }
 }

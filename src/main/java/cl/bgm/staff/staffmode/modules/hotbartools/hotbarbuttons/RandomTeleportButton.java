@@ -1,8 +1,8 @@
 package cl.bgm.staff.staffmode.modules.hotbartools.hotbarbuttons;
 
-import cl.bgm.butils.gui.GUIButton;
-import cl.bgm.butils.items.ItemBuilder;
 import cl.bgm.staff.Permissions;
+import cl.bgm.staff.util.ItemBuilder;
+import cl.bgm.staff.util.gui.GUIButton;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -25,7 +25,7 @@ public class RandomTeleportButton extends GUIButton {
   }
 
   @Override
-  public void clickBy(Player player) {
+  public void click(Player player) {
     Player randomPlayer = getRandomOnlinePlayer();
     if (randomPlayer == null) {
       player.sendMessage(ChatColor.RED + "No hay nadie a quien teletransportarse.");

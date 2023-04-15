@@ -6,7 +6,7 @@
 
     <groupId>cl.bgm</groupId>
     <artifactId>Staff</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -47,6 +47,11 @@
             <version>1.0.3-SNAPSHOT</version>
         </dependency>
         <dependency>
+            <groupId>cl.bgm</groupId>
+            <artifactId>AllTranslations</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
             <groupId>com.google.inject.extensions</groupId>
             <artifactId>guice-assistedinject</artifactId>
             <version>5.1.0</version>
@@ -85,8 +90,7 @@
                             <artifactSet>
                                 <includes>
                                     <include>cl.bgmp:command-framework-bukkit</include>
-                                    <include>aopalliance:aopalliance</include>
-                                    <include>cl.bgm:command-framework-bukkit</include>
+                                    <include>cl.bgm:AllTranslations</include>
                                     <include>com.google.inject:guice</include>
                                     <include>javax.inject:javax.inject</include>
                                     <include>aopalliance:aopalliance</include>
