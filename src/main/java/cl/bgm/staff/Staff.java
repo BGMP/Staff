@@ -52,8 +52,6 @@ public final class Staff extends JavaPlugin {
 
   @Override
   public void onEnable() {
-    // Set classloader for translations
-    Thread.currentThread().setContextClassLoader(this.getClassLoader());
     this.translations = new Translations();
 
     this.inject();
