@@ -47,7 +47,7 @@ public class HotBarToolsModule extends StaffModeModule {
   @EventHandler(priority = EventPriority.MONITOR)
   public void onPlayerClickHotBar(PlayerInteractEvent event) {
     final Player clicker = event.getPlayer();
-    if (!this.staffMode.isEnabledFor(clicker)) return;
+    if (!this.staffMode.isEnabled(clicker)) return;
     if (event.getHand() != EquipmentSlot.HAND) return;
 
     final Action action = event.getAction();

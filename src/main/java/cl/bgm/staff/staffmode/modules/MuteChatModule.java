@@ -14,7 +14,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 public class MuteChatModule extends StaffModeModule {
   private boolean muted = false;
 
-  public void muteChatBy(CommandSender muter) {
+  public void mute(CommandSender muter) {
     if (this.muted) {
       Bukkit.broadcastMessage(
           ChatColor.GREEN + "Chat has been unmuted by " + ChatColor.RESET + muter.getName());

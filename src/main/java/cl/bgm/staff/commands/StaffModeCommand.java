@@ -29,12 +29,13 @@ public class StaffModeCommand {
   public void staffMode(CommandContext args, CommandSender sender) {
     Player player = (Player) sender;
 
-    if (this.staffMode.isEnabledFor(player)) {
-      this.staffMode.disableFor(player);
+    if (this.staffMode.isEnabled(player)) {
+      this.staffMode.disable(player);
       player.sendMessage(ChatColor.RED + translations.get("staff.staffmode.disabled", player));
-    } else {
-      this.staffMode.enableFor(player);
-      player.sendMessage(ChatColor.GREEN + translations.get("staff.staffmode.enabled", player));
+      return;
     }
+
+    this.staffMode.enable(player);
+    player.sendMessage(ChatColor.GREEN + translations.get("staff.staffmode.enabled", player));
   }
 }

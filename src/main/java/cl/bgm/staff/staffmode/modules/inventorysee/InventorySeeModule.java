@@ -176,7 +176,7 @@ public class InventorySeeModule extends StaffModeModule {
     if (!(humanEntity instanceof Player)) return;
 
     Player player = (Player) humanEntity;
-    event.setCancelled(playerIsPreviewing(player) || staffMode.isEnabledFor(player));
+    event.setCancelled(playerIsPreviewing(player) || staffMode.isEnabled(player));
   }
 
   @EventHandler(priority = EventPriority.LOWEST)
@@ -185,7 +185,7 @@ public class InventorySeeModule extends StaffModeModule {
     if (!(humanEntity instanceof Player)) return;
 
     Player player = (Player) humanEntity;
-    event.setCancelled(playerIsPreviewing(player) || staffMode.isEnabledFor(player));
+    event.setCancelled(playerIsPreviewing(player) || staffMode.isEnabled(player));
   }
 
   private boolean playerIsPreviewing(Player player) {
@@ -243,7 +243,7 @@ public class InventorySeeModule extends StaffModeModule {
   }
 
   public boolean canPreviewInventory(Player viewer) {
-    return staffMode.isEnabledFor(viewer) && !pfm.isPlayerFreezing(viewer);
+    return staffMode.isEnabled(viewer) && !pfm.isPlayerFreezing(viewer);
   }
 
   protected void scheduleCheck(Player updater) {

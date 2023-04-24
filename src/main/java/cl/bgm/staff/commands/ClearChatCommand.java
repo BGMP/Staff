@@ -22,6 +22,6 @@ public class ClearChatCommand {
   @CommandPermissions(Permissions.CLEAR_CHAT)
   @CommandScopes({"player", "console"})
   public void clearChat(CommandContext args, CommandSender sender) {
-    this.ccm.clearChatBy(sender);
+    this.ccm.clearChat(sender);
   }
 }

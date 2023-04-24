@@ -22,6 +22,6 @@ public class MuteChatCommand {
   @CommandPermissions(Permissions.MUTE_CHAT)
   @CommandScopes({"player", "console"})
   public void muteChat(CommandContext args, CommandSender sender) {
-    this.mcm.muteChatBy(sender);
+    this.mcm.mute(sender);
   }
 }

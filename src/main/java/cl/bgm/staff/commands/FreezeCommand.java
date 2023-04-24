@@ -28,10 +28,11 @@ public class FreezeCommand {
     final String targetName = args.getString(0);
     final Player target = Bukkit.getPlayer(targetName);
 
-    if (this.pfm.isFreezing(target)) {
+    if (this.pfm.isFrozen(target)) {
       this.pfm.unfreeze(sender, target);
-    } else {
-      this.pfm.freeze(sender, target);
+      return;
     }
+
+    this.pfm.freeze(sender, target);
   }
 }

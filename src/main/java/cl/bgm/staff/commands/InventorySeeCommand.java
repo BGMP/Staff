@@ -31,9 +31,10 @@ public class InventorySeeCommand {
 
     if (viewedPlayer == null) {
       sender.sendMessage(ChatColor.RED + "Player not found.");
-    } else {
-      Player viewer = (Player) sender;
-      this.ism.previewInventory(viewer, viewedPlayer.getInventory());
+      return;
     }
+
+    Player viewer = (Player) sender;
+    this.ism.previewInventory(viewer, viewedPlayer.getInventory());
   }
 }

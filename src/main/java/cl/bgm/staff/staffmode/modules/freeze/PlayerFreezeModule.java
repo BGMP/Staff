@@ -40,7 +40,6 @@ import org.bukkit.event.vehicle.VehicleMoveEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.util.Vector;
 
-// Tell people hitting the frozen player they're hitting
 @Singleton
 public class PlayerFreezeModule extends StaffModeModule {
   private static final Material FREEZE_MATERIAL = Material.ICE;
@@ -67,7 +66,7 @@ public class PlayerFreezeModule extends StaffModeModule {
     player.playSound(player.getLocation(), Sound.ENTITY_ENDER_DRAGON_GROWL, 10F, 10F);
   }
 
-  public boolean isFreezing(Player player) {
+  public boolean isFrozen(Player player) {
     return this.players.contains(player);
   }
 
@@ -101,7 +100,7 @@ public class PlayerFreezeModule extends StaffModeModule {
 
   @EventHandler
   public void onPlayerQuit(PlayerQuitEvent event) {
-    if (this.isFreezing(event.getPlayer())) {
+    if (this.isFrozen(event.getPlayer())) {
       Player player = event.getPlayer();
 
       this.players.remove(player);
@@ -112,8 +111,8 @@ public class PlayerFreezeModule extends StaffModeModule {
   @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
   public void onPlayerInteractAtEntity(PlayerInteractAtEntityEvent event) {
     Player clicker = event.getPlayer();
-    if (!staffMode.isEnabledFor(clicker)) {
-      if (!this.isFreezing(clicker)) return;
+    if (!staffMode.isEnabled(clicker)) {
+      if (!this.isFrozen(clicker)) return;
 
       event.setCancelled(true);
     }
@@ -128,28 +127,28 @@ public class PlayerFreezeModule extends StaffModeModule {
     if (material != FREEZE_MATERIAL) return;
 
     Player clicked = (Player) entity;
-
-    if (this.isFreezing(clicked)) {
+    if (this.isFrozen(clicked)) {
       this.unfreeze(clicker, clicked);
-    } else {
-      this.freeze(clicker, clicked);
+      return;
     }
+
+    this.freeze(clicker, clicked);
   }
 
   @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
   public void onPlayerMove(PlayerMoveEvent event) {
-    if (this.isFreezing(event.getPlayer())) {
-      Location old = event.getFrom();
-      old.setPitch(event.getTo().getPitch());
-      old.setYaw(event.getTo().getYaw());
-      event.setTo(old);
-    }
+    if (!this.isFrozen(event.getPlayer())) return;
+
+    Location old = event.getFrom();
+    old.setPitch(event.getTo().getPitch());
+    old.setYaw(event.getTo().getYaw());
+    event.setTo(old);
   }
 
   @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
   public void onPlayerInteract(PlayerInteractEvent event) {
     Player player = event.getPlayer();
-    if (!this.isFreezing(player)) return;
+    if (!this.isFrozen(player)) return;
 
     event.setCancelled(true);
   }
@@ -157,7 +156,7 @@ public class PlayerFreezeModule extends StaffModeModule {
   @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
   public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
     Player player = event.getPlayer();
-    if (!this.isFreezing(player)) return;
+    if (!this.isFrozen(player)) return;
 
     event.setCancelled(true);
   }
@@ -168,7 +167,7 @@ public class PlayerFreezeModule extends StaffModeModule {
     if (!(entity instanceof Player)) return;
 
     Player player = (Player) entity;
-    if (!event.getVehicle().isEmpty() && this.isFreezing(player)) {
+    if (!event.getVehicle().isEmpty() && this.isFrozen(player)) {
       event.getVehicle().setVelocity(new Vector(0, 0, 0));
     }
   }
@@ -179,7 +178,7 @@ public class PlayerFreezeModule extends StaffModeModule {
     if (!(entity instanceof Player)) return;
 
     Player player = (Player) entity;
-    if (this.isFreezing(player)) {
+    if (this.isFrozen(player)) {
       event.setCancelled(true);
     }
   }
@@ -190,9 +189,9 @@ public class PlayerFreezeModule extends StaffModeModule {
     if (!(entity instanceof Player)) return;
 
     Player player = (Player) entity;
-    if (this.isFreezing(player)) {
-      event.setCancelled(true);
-    }
+    if (!this.isFrozen(player)) return;
+
+    event.setCancelled(true);
   }
 
   @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
@@ -201,23 +200,21 @@ public class PlayerFreezeModule extends StaffModeModule {
     if (!(entity instanceof Player)) return;
 
     Player player = (Player) entity;
-    if (this.isFreezing(player)) {
-      event.setCancelled(true);
-    }
+    if (!this.isFrozen(player)) return;
+
+    event.setCancelled(true);
   }
 
   @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
   public void onPlayerBucketFill(PlayerBucketFillEvent event) {
-    Player player = event.getPlayer();
-    if (!this.isFreezing(player)) return;
+    if (!this.isFrozen(event.getPlayer())) return;
 
     event.setCancelled(true);
   }
 
   @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
   public void onPlayerBucketEmpty(PlayerBucketEmptyEvent event) {
-    Player player = event.getPlayer();
-    if (!this.isFreezing(player)) return;
+    if (!this.isFrozen(event.getPlayer())) return;
 
     event.setCancelled(true);
   }
@@ -228,14 +225,14 @@ public class PlayerFreezeModule extends StaffModeModule {
     if (!(entity instanceof Player)) return;
 
     Player player = (Player) entity;
-    if (!this.isFreezing(player)) return;
+    if (!this.isFrozen(player)) return;
 
     event.setCancelled(true);
   }
 
   @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
   public void onPlayerDropItem(PlayerDropItemEvent event) {
-    if (!this.isFreezing(event.getPlayer())) return;
+    if (!this.isFrozen(event.getPlayer())) return;
 
     event.setCancelled(true);
   }
@@ -246,34 +243,30 @@ public class PlayerFreezeModule extends StaffModeModule {
     if (!(entity instanceof Player)) return;
 
     Player player = (Player) entity;
-    if (!this.isFreezing(player)) return;
+    if (!this.isFrozen(player)) return;
 
     event.setCancelled(true);
   }
 
   @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
   public void onPlayerEnterBed(PlayerBedEnterEvent event) {
-    if (!this.isFreezing(event.getPlayer())) return;
+    if (!this.isFrozen(event.getPlayer())) return;
 
     event.setCancelled(true);
   }
 
   @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
   public void onBlockBreak(BlockBreakEvent event) {
-    Player player = event.getPlayer();
+    if (!this.isFrozen(event.getPlayer())) return;
 
-    if (this.isFreezing(player)) {
-      event.setCancelled(true);
-    }
+    event.setCancelled(true);
   }
 
   @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
   public void onBlockPlace(BlockPlaceEvent event) {
-    Player player = event.getPlayer();
+    if (!this.isFrozen(event.getPlayer())) return;
 
-    if (this.isFreezing(player)) {
-      event.setCancelled(true);
-    }
+    event.setCancelled(true);
   }
 
   @Override

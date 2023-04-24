@@ -21,21 +21,21 @@ public class EnvironmentControlModule extends StaffModeModule {
 
   @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
   public void onBlockPlace(BlockPlaceEvent event) {
-    if (!this.staffMode.isEnabledFor(event.getPlayer())) return;
+    if (!this.staffMode.isEnabled(event.getPlayer())) return;
 
     event.setCancelled(true);
   }
 
   @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
   public void onBlockBreak(BlockBreakEvent event) {
-    if (!this.staffMode.isEnabledFor(event.getPlayer())) return;
+    if (!this.staffMode.isEnabled(event.getPlayer())) return;
 
     event.setCancelled(true);
   }
 
   @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
   public void onPlayerInteract(PlayerInteractEvent event) {
-    if (!this.staffMode.isEnabledFor(event.getPlayer())) return;
+    if (!this.staffMode.isEnabled(event.getPlayer())) return;
 
     event.setCancelled(true);
   }
@@ -43,21 +43,21 @@ public class EnvironmentControlModule extends StaffModeModule {
   @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
   public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
     Player player = event.getPlayer();
-    if (!this.staffMode.isEnabledFor(player)) return;
+    if (!this.staffMode.isEnabled(player)) return;
 
     event.setCancelled(true);
   }
 
   @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
   public void onItemDrop(PlayerDropItemEvent event) {
-    if (!this.staffMode.isEnabledFor(event.getPlayer())) return;
+    if (!this.staffMode.isEnabled(event.getPlayer())) return;
 
     event.setCancelled(true);
   }
 
   @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
   public void onPlayerEnterBed(PlayerBedEnterEvent event) {
-    if (!this.staffMode.isEnabledFor(event.getPlayer())) return;
+    if (!this.staffMode.isEnabled(event.getPlayer())) return;
 
     event.setCancelled(true);
   }
@@ -68,7 +68,7 @@ public class EnvironmentControlModule extends StaffModeModule {
     if (!(entity instanceof Player)) return;
 
     Player player = (Player) entity;
-    if (!this.staffMode.isEnabledFor(player)) return;
+    if (!this.staffMode.isEnabled(player)) return;
 
     event.setCancelled(true);
   }
@@ -79,7 +79,7 @@ public class EnvironmentControlModule extends StaffModeModule {
     if (!(entity instanceof Player)) return;
 
     Player player = (Player) entity;
-    if (!this.staffMode.isEnabledFor(player)) return;
+    if (!this.staffMode.isEnabled(player)) return;
 
     event.setCancelled(true);
   }
@@ -90,7 +90,7 @@ public class EnvironmentControlModule extends StaffModeModule {
     if (!(damager instanceof Player)) return;
 
     Player player = (Player) damager;
-    if (!this.staffMode.isEnabledFor(player)) return;
+    if (!this.staffMode.isEnabled(player)) return;
 
     event.setCancelled(true);
   }
@@ -101,7 +101,7 @@ public class EnvironmentControlModule extends StaffModeModule {
     if (!(entity instanceof Player)) return;
 
     Player picker = (Player) entity;
-    if (!this.staffMode.isEnabledFor(picker)) return;
+    if (!this.staffMode.isEnabled(picker)) return;
 
     event.setCancelled(true);
   }
@@ -109,7 +109,7 @@ public class EnvironmentControlModule extends StaffModeModule {
   @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
   public void onPlayerBucketFill(PlayerBucketFillEvent event) {
     Player player = event.getPlayer();
-    if (!this.staffMode.isEnabledFor(player)) return;
+    if (!this.staffMode.isEnabled(player)) return;
 
     event.setCancelled(true);
   }
@@ -117,7 +117,7 @@ public class EnvironmentControlModule extends StaffModeModule {
   @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
   public void onPlayerBucketEmpty(PlayerBucketEmptyEvent event) {
     Player player = event.getPlayer();
-    if (!this.staffMode.isEnabledFor(player)) return;
+    if (!this.staffMode.isEnabled(player)) return;
 
     event.setCancelled(true);
   }
@@ -128,7 +128,7 @@ public class EnvironmentControlModule extends StaffModeModule {
     if (!(entity instanceof Player)) return;
 
     Player player = (Player) entity;
-    if (this.staffMode.isEnabledFor(player)) {
+    if (this.staffMode.isEnabled(player)) {
       event.setCancelled(true);
     }
   }

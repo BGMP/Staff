@@ -27,7 +27,7 @@ public class VanishModule extends StaffModeModule {
    *
    * @param vanished The player being vanished.
    */
-  public void enableFor(Player vanished) {
+  public void enable(Player vanished) {
     for (Player playerFor : this.staff.getServer().getOnlinePlayers()) {
       if (playerFor.hasPermission(Permissions.VANISH_MODE_SEE)) continue;
 
@@ -42,7 +42,7 @@ public class VanishModule extends StaffModeModule {
    *
    * @param vanished The vanished player in question.
    */
-  public void disableFor(Player vanished) {
+  public void disable(Player vanished) {
     for (Player playerFor : this.staff.getServer().getOnlinePlayers()) {
       playerFor.showPlayer(this.staff, vanished);
     }
@@ -56,7 +56,7 @@ public class VanishModule extends StaffModeModule {
    * @param vanished The vanished player.
    * @param vanishedFor The player who the vanished player will effectively render vanished for.
    */
-  public void enableForParticular(Player vanished, Player vanishedFor) {
+  public void enable(Player vanished, Player vanishedFor) {
     if (vanishedFor.hasPermission(Permissions.VANISH_MODE_SEE)) return;
 
     vanishedFor.hidePlayer(this.staff, vanished);
@@ -69,7 +69,7 @@ public class VanishModule extends StaffModeModule {
    * @param unVanishedFor The player who the un-vanished player will effectively render un-vanished
    *     for.
    */
-  public void disableForParticular(Player unVanished, Player unVanishedFor) {
+  public void disable(Player unVanished, Player unVanishedFor) {
     unVanishedFor.showPlayer(this.staff, unVanished);
   }
 
@@ -84,7 +84,7 @@ public class VanishModule extends StaffModeModule {
   public void onVanishedPlayerQuit(PlayerQuitEvent event) {
     if (!this.isEnabledFor(event.getPlayer())) return;
 
-    this.disableFor(event.getPlayer());
+    this.disable(event.getPlayer());
     event.setQuitMessage(null);
   }
 
@@ -98,7 +98,7 @@ public class VanishModule extends StaffModeModule {
   public void restoreVanishOnJoin(PlayerJoinEvent event) {
     for (String vanishedPlayerName : this.vanishedPlayers) {
       Player vanishedPlayer = Bukkit.getPlayer(vanishedPlayerName);
-      this.enableForParticular(vanishedPlayer, event.getPlayer());
+      this.enable(vanishedPlayer, event.getPlayer());
     }
   }
 

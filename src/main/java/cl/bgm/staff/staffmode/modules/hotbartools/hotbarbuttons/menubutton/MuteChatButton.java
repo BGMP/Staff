@@ -24,6 +24,6 @@ public class MuteChatButton extends GUIButton {
 
   @Override
   public void click(Player player) {
-    this.mcm.muteChatBy(player);
+    this.mcm.mute(player);
   }
 }

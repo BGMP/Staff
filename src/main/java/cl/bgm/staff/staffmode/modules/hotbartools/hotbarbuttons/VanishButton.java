@@ -26,10 +26,10 @@ public class VanishButton extends GUIButton {
     if (vm == null) return;
 
     if (vm.isEnabledFor(player)) {
-      vm.disableFor(player);
+      vm.disable(player);
       player.getInventory().setItem(this.getSlot(), this.vanishOffVariant);
     } else {
-      vm.enableFor(player);
+      vm.enable(player);
       player.getInventory().setItem(this.getSlot(), this.itemStack);
     }
   }

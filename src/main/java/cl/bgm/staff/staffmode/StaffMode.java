@@ -31,7 +31,7 @@ public class StaffMode implements Listener {
 
   public void shutDown() {
     for (Player user : users) {
-      this.disableFor(user);
+      this.disable(user);
     }
   }
 
@@ -39,30 +39,30 @@ public class StaffMode implements Listener {
     return smm;
   }
 
-  public boolean isEnabledFor(Player player) {
+  public boolean isEnabled(Player player) {
     return this.users.contains(player);
   }
 
-  public void enableFor(Player player) {
+  public void enable(Player player) {
     final InventoryMemoryModule imm = this.smm.needModule(InventoryMemoryModule.class);
     final HotBarToolsModule hbtm = this.smm.needModule(HotBarToolsModule.class);
     final VanishModule vm = this.smm.needModule(VanishModule.class);
 
     if (imm != null) imm.savePlayerInventory(player);
     if (hbtm != null) hbtm.deliverItemsTo(player);
-    if (vm != null) vm.enableFor(player);
+    if (vm != null) vm.enable(player);
 
     player.setGameMode(GameMode.CREATIVE);
 
     this.users.add(player);
   }
 
-  public void disableFor(Player player) {
+  public void disable(Player player) {
     final InventoryMemoryModule imm = this.smm.needModule(InventoryMemoryModule.class);
     final VanishModule vm = this.smm.needModule(VanishModule.class);
 
     if (imm != null) imm.restorePlayerInventory(player);
-    if (vm != null) vm.disableFor(player);
+    if (vm != null) vm.disable(player);
 
     this.users.remove(player);
   }
@@ -70,6 +70,6 @@ public class StaffMode implements Listener {
   @EventHandler(priority = EventPriority.LOWEST)
   public void onPlayerQuit(PlayerQuitEvent event) {
     Player player = event.getPlayer();
-    if (this.isEnabledFor(player)) this.disableFor(player);
+    if (this.isEnabled(player)) this.disable(player);
   }
 }

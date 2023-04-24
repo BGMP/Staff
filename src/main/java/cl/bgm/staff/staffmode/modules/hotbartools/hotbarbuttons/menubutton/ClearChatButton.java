@@ -24,6 +24,6 @@ public class ClearChatButton extends GUIButton {
 
   @Override
   public void click(Player player) {
-    this.ccm.clearChatBy(player);
+    this.ccm.clearChat(player);
   }
 }
