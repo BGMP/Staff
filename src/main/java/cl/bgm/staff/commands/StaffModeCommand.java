@@ -1,6 +1,7 @@
 package cl.bgm.staff.commands;
 
 import cl.bgm.minecraft.util.commands.CommandContext;
+import cl.bgm.minecraft.util.commands.CommandScope;
 import cl.bgm.minecraft.util.commands.annotations.Command;
 import cl.bgm.minecraft.util.commands.annotations.CommandPermissions;
 import cl.bgm.minecraft.util.commands.annotations.CommandScopes;
@@ -25,7 +26,7 @@ public class StaffModeCommand {
       desc = "Turn on staff mode.",
       max = 0)
   @CommandPermissions(Permissions.STAFF_MODE_USE)
-  @CommandScopes("player")
+  @CommandScopes(CommandScope.PLAYER)
   public void staffMode(CommandContext args, CommandSender sender) {
     Player player = (Player) sender;
 

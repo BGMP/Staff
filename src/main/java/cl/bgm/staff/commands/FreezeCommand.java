@@ -1,6 +1,7 @@
 package cl.bgm.staff.commands;
 
 import cl.bgm.minecraft.util.commands.CommandContext;
+import cl.bgm.minecraft.util.commands.CommandScope;
 import cl.bgm.minecraft.util.commands.annotations.Command;
 import cl.bgm.minecraft.util.commands.annotations.CommandPermissions;
 import cl.bgm.minecraft.util.commands.annotations.CommandScopes;
@@ -23,7 +24,7 @@ public class FreezeCommand {
       min = 1,
       max = 1)
   @CommandPermissions(Permissions.FREEZE)
-  @CommandScopes("player")
+  @CommandScopes(CommandScope.PLAYER)
   public void freeze(CommandContext args, CommandSender sender) {
     final String targetName = args.getString(0);
     final Player target = Bukkit.getPlayer(targetName);

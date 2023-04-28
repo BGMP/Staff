@@ -1,6 +1,7 @@
 package cl.bgm.staff.commands;
 
 import cl.bgm.minecraft.util.commands.CommandContext;
+import cl.bgm.minecraft.util.commands.CommandScope;
 import cl.bgm.minecraft.util.commands.annotations.Command;
 import cl.bgm.minecraft.util.commands.annotations.CommandPermissions;
 import cl.bgm.minecraft.util.commands.annotations.CommandScopes;
@@ -24,7 +25,7 @@ public class InventorySeeCommand {
       min = 1,
       max = 1)
   @CommandPermissions(Permissions.INVSEE)
-  @CommandScopes("player")
+  @CommandScopes(CommandScope.PLAYER)
   public void inventorySee(CommandContext args, CommandSender sender) {
     final String viewedPlayerName = args.getString(0);
     final Player viewedPlayer = Bukkit.getPlayer(viewedPlayerName);

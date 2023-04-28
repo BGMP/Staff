@@ -2,6 +2,7 @@ package cl.bgm.staff;
 
 import cl.bgm.bukkit.util.BukkitCommandsManager;
 import cl.bgm.bukkit.util.CommandsManagerRegistration;
+import cl.bgm.minecraft.util.commands.CommandScope;
 import cl.bgm.minecraft.util.commands.annotations.TabCompletion;
 import cl.bgm.minecraft.util.commands.exceptions.CommandException;
 import cl.bgm.minecraft.util.commands.exceptions.CommandPermissionsException;
@@ -95,8 +96,8 @@ public final class Staff extends JavaPlugin {
     try {
       this.commandsManager.execute(command.getName(), args, sender, sender);
     } catch (ScopeMismatchException exception) {
-      final String[] scopes = exception.getScopes();
-      if (!Arrays.asList(scopes).contains("player")) {
+      final CommandScope[] scopes = exception.getScopes();
+      if (!Arrays.asList(scopes).contains(CommandScope.PLAYER)) {
         sender.sendMessage(ChatColor.RED + translations.get("commands.no.player", sender));
       } else {
         sender.sendMessage(ChatColor.RED + translations.get("commands.no.console", sender));

@@ -1,6 +1,7 @@
 package cl.bgm.staff.commands;
 
 import cl.bgm.minecraft.util.commands.CommandContext;
+import cl.bgm.minecraft.util.commands.CommandScope;
 import cl.bgm.minecraft.util.commands.annotations.Command;
 import cl.bgm.minecraft.util.commands.annotations.CommandPermissions;
 import cl.bgm.minecraft.util.commands.annotations.CommandScopes;
@@ -20,7 +21,7 @@ public class ClearChatCommand {
       desc = "Clean the chat.",
       max = 0)
   @CommandPermissions(Permissions.CLEAR_CHAT)
-  @CommandScopes({"player", "console"})
+  @CommandScopes({CommandScope.PLAYER, CommandScope.CONSOLE})
   public void clearChat(CommandContext args, CommandSender sender) {
     this.ccm.clearChat(sender);
   }
