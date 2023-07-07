@@ -89,7 +89,7 @@
                             <createDependencyReducedPom>false</createDependencyReducedPom>
                             <artifactSet>
                                 <includes>
-                                    <include>cl.bgmp:command-framework-bukkit</include>
+                                    <include>cl.bgm:command-framework-bukkit</include>
                                     <include>cl.bgm:AllTranslations</include>
                                     <include>com.google.inject:guice</include>
                                     <include>javax.inject:javax.inject</include>
