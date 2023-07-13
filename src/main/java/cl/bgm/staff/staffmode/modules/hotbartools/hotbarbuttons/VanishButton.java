@@ -25,7 +25,7 @@ public class VanishButton extends GUIButton {
     final VanishModule vm = this.smm.needModule(VanishModule.class);
     if (vm == null) return;
 
-    if (vm.isEnabledFor(player)) {
+    if (vm.isEnabled(player)) {
       vm.disable(player);
       player.getInventory().setItem(this.getSlot(), this.vanishOffVariant);
     } else {

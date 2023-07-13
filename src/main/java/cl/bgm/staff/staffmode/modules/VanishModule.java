@@ -17,7 +17,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 public class VanishModule extends StaffModeModule {
   private Set<String> vanishedPlayers = new HashSet<>();
 
-  public boolean isEnabledFor(Player player) {
+  public boolean isEnabled(Player player) {
     return vanishedPlayers.contains(player.getName());
   }
 
@@ -25,64 +25,64 @@ public class VanishModule extends StaffModeModule {
    * Vanishes a player from the rest of the server, unless they have the permission
    * "staff.vanish.see".
    *
-   * @param vanished The player being vanished.
+   * @param player The player being vanished.
    */
-  public void enable(Player vanished) {
-    for (Player playerFor : this.staff.getServer().getOnlinePlayers()) {
-      if (playerFor.hasPermission(Permissions.VANISH_MODE_SEE)) continue;
+  public void enable(Player player) {
+    for (Player p : this.staff.getServer().getOnlinePlayers()) {
+      if (p.hasPermission(Permissions.VANISH_MODE_SEE)) continue;
 
-      playerFor.hidePlayer(this.staff, vanished);
+      p.hidePlayer(this.staff, player);
     }
 
-    vanishedPlayers.add(vanished.getName());
+    vanishedPlayers.add(player.getName());
   }
 
   /**
    * UnVanishes a player from the rest of the server.
    *
-   * @param vanished The vanished player in question.
+   * @param player The vanished player in question.
    */
-  public void disable(Player vanished) {
-    for (Player playerFor : this.staff.getServer().getOnlinePlayers()) {
-      playerFor.showPlayer(this.staff, vanished);
+  public void disable(Player player) {
+    for (Player p : this.staff.getServer().getOnlinePlayers()) {
+      p.showPlayer(this.staff, player);
     }
 
-    vanishedPlayers.remove(vanished.getName());
+    vanishedPlayers.remove(player.getName());
   }
 
   /**
    * Vanishes a player for another player in particular.
    *
-   * @param vanished The vanished player.
-   * @param vanishedFor The player who the vanished player will effectively render vanished for.
+   * @param player The vanished player.
+   * @param player2 The player who the vanished player will effectively render vanished for.
    */
-  public void enable(Player vanished, Player vanishedFor) {
-    if (vanishedFor.hasPermission(Permissions.VANISH_MODE_SEE)) return;
+  public void enable(Player player, Player player2) {
+    if (player2.hasPermission(Permissions.VANISH_MODE_SEE)) return;
 
-    vanishedFor.hidePlayer(this.staff, vanished);
+    player2.hidePlayer(this.staff, player);
   }
 
   /**
    * Un-vanishes a player for another player in particular.
    *
-   * @param unVanished The un-vanished player.
-   * @param unVanishedFor The player who the un-vanished player will effectively render un-vanished
+   * @param player The un-vanished player.
+   * @param player2 The player who the un-vanished player will effectively render un-vanished
    *     for.
    */
-  public void disable(Player unVanished, Player unVanishedFor) {
-    unVanishedFor.showPlayer(this.staff, unVanished);
+  public void disable(Player player, Player player2) {
+    player2.showPlayer(this.staff, player);
   }
 
   @EventHandler(priority = EventPriority.MONITOR)
   public void suppressJoinMessage(PlayerJoinEvent event) {
-    if (!this.isEnabledFor(event.getPlayer())) return;
+    if (!this.isEnabled(event.getPlayer())) return;
 
     event.setJoinMessage(null);
   }
 
   @EventHandler(priority = EventPriority.MONITOR)
   public void onVanishedPlayerQuit(PlayerQuitEvent event) {
-    if (!this.isEnabledFor(event.getPlayer())) return;
+    if (!this.isEnabled(event.getPlayer())) return;
 
     this.disable(event.getPlayer());
     event.setQuitMessage(null);

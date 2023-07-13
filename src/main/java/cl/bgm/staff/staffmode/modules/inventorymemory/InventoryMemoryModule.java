@@ -12,7 +12,7 @@ public class InventoryMemoryModule extends StaffModeModule {
 
   public InventoryMemoryModule() {}
 
-  public void savePlayerInventory(Player player) {
+  public void save(Player player) {
     InventoryMemoryEntry entry = new InventoryMemoryEntry();
     entry.setOwner(player.getName());
     entry.setContents(player.getInventory().getContents());
@@ -20,12 +20,12 @@ public class InventoryMemoryModule extends StaffModeModule {
     entry.setExp(player.getExp());
     entry.setGameMode(player.getGameMode());
 
-    this.wipePlayerInventory(player.getInventory());
+    this.wipe(player);
 
     this.entries.add(entry);
   }
 
-  public void restorePlayerInventory(Player player) {
+  public void restore(Player player) {
     final Optional<InventoryMemoryEntry> entryOptional = this.getEntry(player);
     if (!entryOptional.isPresent()) return;
 
@@ -46,7 +46,9 @@ public class InventoryMemoryModule extends StaffModeModule {
     return this.entries.stream().filter(e -> e.getOwner().equals(player.getName())).findFirst();
   }
 
-  private void wipePlayerInventory(PlayerInventory inventory) {
+  private void wipe(Player player) {
+    PlayerInventory inventory = player.getInventory();
+
     inventory.clear();
     inventory.setHelmet(null);
     inventory.setChestplate(null);

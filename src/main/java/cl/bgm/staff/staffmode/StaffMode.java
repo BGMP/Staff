@@ -48,7 +48,7 @@ public class StaffMode implements Listener {
     final HotBarToolsModule hbtm = this.smm.needModule(HotBarToolsModule.class);
     final VanishModule vm = this.smm.needModule(VanishModule.class);
 
-    if (imm != null) imm.savePlayerInventory(player);
+    if (imm != null) imm.save(player);
     if (hbtm != null) hbtm.deliverItemsTo(player);
     if (vm != null) vm.enable(player);
 
@@ -61,7 +61,7 @@ public class StaffMode implements Listener {
     final InventoryMemoryModule imm = this.smm.needModule(InventoryMemoryModule.class);
     final VanishModule vm = this.smm.needModule(VanishModule.class);
 
-    if (imm != null) imm.restorePlayerInventory(player);
+    if (imm != null) imm.restore(player);
     if (vm != null) vm.disable(player);
 
     this.users.remove(player);
