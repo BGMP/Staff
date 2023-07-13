@@ -66,8 +66,7 @@ public class VanishModule extends StaffModeModule {
    * Un-vanishes a player for another player in particular.
    *
    * @param player The un-vanished player.
-   * @param player2 The player who the un-vanished player will effectively render un-vanished
-   *     for.
+   * @param player2 The player who the un-vanished player will effectively render un-vanished for.
    */
   public void disable(Player player, Player player2) {
     player2.showPlayer(this.staff, player);
