@@ -19,7 +19,7 @@ public class RandomTeleportButton extends GUIButton {
     super(
         new ItemBuilder(Material.MUSIC_DISC_CAT)
             .setName("&c&lRandom Teleport")
-            .setLore("&7Click derecho para teletransportarte", "&7a un jugador aleatorio.")
+            .setLore("&7Right click to teleport", "&7to a random player.")
             .build(),
         8);
   }
@@ -28,7 +28,7 @@ public class RandomTeleportButton extends GUIButton {
   public void click(Player player) {
     Player randomPlayer = getRandomOnlinePlayer();
     if (randomPlayer == null) {
-      player.sendMessage(ChatColor.RED + "No hay nadie a quien teletransportarse.");
+      player.sendMessage(ChatColor.RED + "There are no players to teleport to.");
     } else {
       player.teleport(randomPlayer);
     }

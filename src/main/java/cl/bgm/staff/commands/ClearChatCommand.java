@@ -18,7 +18,7 @@ public class ClearChatCommand {
 
   @Command(
       aliases = {"clearchat"},
-      desc = "Clean the chat.",
+      desc = "Clear the chat.",
       max = 0)
   @CommandPermissions(Permissions.CLEAR_CHAT)
   @CommandScopes({CommandScope.PLAYER, CommandScope.CONSOLE})

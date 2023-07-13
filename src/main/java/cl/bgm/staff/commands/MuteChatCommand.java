@@ -18,7 +18,7 @@ public class MuteChatCommand {
 
   @Command(
       aliases = {"mutechat"},
-      desc = "Silence the chat.",
+      desc = "Mute the chat.",
       max = 0)
   @CommandPermissions(Permissions.MUTE_CHAT)
   @CommandScopes({CommandScope.PLAYER, CommandScope.CONSOLE})
