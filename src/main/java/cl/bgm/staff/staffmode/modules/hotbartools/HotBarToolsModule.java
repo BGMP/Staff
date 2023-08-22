@@ -61,7 +61,7 @@ public class HotBarToolsModule extends StaffModeModule {
     }
   }
 
-  public void deliverItemsTo(Player player) {
+  public void giveTools(Player player) {
     for (GUIButton button : buttons) {
       player.getInventory().setItem(button.getSlot(), button.getItemStack());
     }

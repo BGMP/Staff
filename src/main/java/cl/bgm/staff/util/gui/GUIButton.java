@@ -5,7 +5,7 @@ import org.bukkit.inventory.ItemStack;
 
 /**
  * GUI button representation, implementing {@link Clickable} for it to be able to be clicked by a
- * {@link org.bukkit.entity.Player}
+ * {@link org.bukkit.entity.Player}.
  */
 public abstract class GUIButton implements Clickable {
   protected ItemStack itemStack;

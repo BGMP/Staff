@@ -10,7 +10,7 @@ public interface ModuleManager<M extends Module> {
   /**
    * Register a module which can be loaded later on.
    *
-   * @param module The module to be registered
+   * @param module The module to be registered.
    */
   void registerModule(M module);
 

@@ -49,7 +49,7 @@ public class StaffMode implements Listener {
     final VanishModule vm = this.smm.needModule(VanishModule.class);
 
     if (imm != null) imm.save(player);
-    if (hbtm != null) hbtm.deliverItemsTo(player);
+    if (hbtm != null) hbtm.giveTools(player);
     if (vm != null) vm.enable(player);
 
     player.setGameMode(GameMode.CREATIVE);

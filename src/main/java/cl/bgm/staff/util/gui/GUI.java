@@ -14,8 +14,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
 /**
- * Represents a GUI. Extend this class from other classes you want to represent a GUI, and Override
- * the methods you deem necessary
+ * Represents a GUI. Extend this class from other classes you want to represent a GUI, and override
+ * the methods you deem necessary.
  */
 public abstract class GUI implements Listener {
   private final long REFRESH = 5L;
@@ -28,9 +28,9 @@ public abstract class GUI implements Listener {
   /**
    * GUI
    *
-   * @param plugin The plugin
-   * @param title GUI's title
-   * @param size GUI's size (Amount of 8 slots rows)
+   * @param plugin The plugin.
+   * @param title GUI's title.
+   * @param size GUI's size (Amount of 8 slots rows).
    */
   public GUI(Plugin plugin, String title, int size) {
     this.title = title;
@@ -44,10 +44,10 @@ public abstract class GUI implements Listener {
   /**
    * GUI
    *
-   * @param plugin The plugin
-   * @param title GUI's title
-   * @param size GUI's size (Amount of 8 slots rows)
-   * @param background GUI's background item to fill empty slots
+   * @param plugin The plugin.
+   * @param title GUI's title.
+   * @param size GUI's size (Amount of 8 slots rows).
+   * @param background GUI's background item to fill empty slots.
    */
   public GUI(Plugin plugin, String title, int size, ItemStack background) {
     this.title = title;

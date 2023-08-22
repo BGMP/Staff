@@ -3,9 +3,9 @@ package cl.bgm.staff.util.gui;
 import org.bukkit.entity.Player;
 
 /**
- * To be implemented by objects which are meant to be clicked by a {@link Player}
+ * To be implemented by objects which are meant to be clicked by a {@link Player}.
  *
- * <p>{@see {@link GUIButton}}
+ * <p>{@see {@link GUIButton}}.
  */
 @FunctionalInterface
 public interface Clickable {
