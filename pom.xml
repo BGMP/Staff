@@ -29,8 +29,8 @@
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
         <repository>
-            <id>bgm</id>
-            <url>https://maven.bgm.cl/</url>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/BGMP/AllTranslations</url>
         </repository>
     </repositories>
 
